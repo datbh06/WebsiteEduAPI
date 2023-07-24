@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,7 +24,7 @@ public class QuyenHan {
     private Integer quyenHanID;
 
     @Column
-    @Max(value = 50, message = "Tên quyền hạn không được vượt quá 50 ký tự")
+    @Size(max = 50, message = "Tên quyền hạn không được vượt quá 50 ký tự")
     private String tenQuyenHan;
 
     @OneToMany(mappedBy = "quyenHan", cascade = CascadeType.REMOVE)

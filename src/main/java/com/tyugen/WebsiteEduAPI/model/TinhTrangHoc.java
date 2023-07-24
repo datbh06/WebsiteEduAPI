@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,7 +23,7 @@ public class TinhTrangHoc {
     private Integer tinhTrangHocID;
 
     @Column
-    @Max(value = 40, message = "Tên tình trạng học không được vượt quá 40 ký tự")
+    @Size(max = 40, message = "Tên tình trạng học không được vượt quá 40 ký tự")
     private String tenTinhTrang;
 
     @OneToMany(mappedBy = "tinhTrangHoc", cascade = CascadeType.REMOVE)

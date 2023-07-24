@@ -2,8 +2,8 @@ package com.tyugen.WebsiteEduAPI.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,15 +22,15 @@ public class TaiKhoan {
     private Integer taiKhoanID;
 
     @Column
-    @Max(value = 50, message = "Tên người dùng không được vượt quá 50 ký tự")
+    @Size(max = 50, message = "Tên người dùng không được vượt quá 50 ký tự")
     private String tenNguoiDung;
 
     @Column
-    @Max(value = 50, message = "Tài khoản không được vượt quá 50 ký tự")
+    @Size(max = 50, message = "Tài khoản không được vượt quá 50 ký tự")
     private String taiKhoan;
 
     @Column
-    @Max(value = 50, message = "Mật khẩu không được vượt quá 50 ký tự")
+    @Size(max = 50, message = "Mật khẩu không được vượt quá 50 ký tự")
     private String matKhau;
 
     @ManyToOne(fetch = FetchType.EAGER)
