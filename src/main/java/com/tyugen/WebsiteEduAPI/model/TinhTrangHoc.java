@@ -13,7 +13,6 @@ import java.util.Set;
 
 @Entity
 @Table
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class TinhTrangHoc {
@@ -29,4 +28,28 @@ public class TinhTrangHoc {
     @OneToMany(mappedBy = "tinhTrangHoc", cascade = CascadeType.REMOVE)
     @JsonIgnoreProperties("tinhTrangHoc")
     private Set<DangKyHoc> dangKyHocs;
+
+    public Integer getTinhTrangHocID() {
+        return tinhTrangHocID;
+    }
+
+    public void setTinhTrangHocID(Integer tinhTrangHocID) {
+        this.tinhTrangHocID = tinhTrangHocID;
+    }
+
+    public String getTenTinhTrang() {
+        return tenTinhTrang;
+    }
+
+    public void setTenTinhTrang(String tenTinhTrang) {
+        this.tenTinhTrang = tenTinhTrang;
+    }
+
+    public Set<DangKyHoc> getDangKyHocs() {
+        return dangKyHocs;
+    }
+
+    public void setDangKyHocs(Set<DangKyHoc> dangKyHocs) {
+        this.dangKyHocs = dangKyHocs;
+    }
 }

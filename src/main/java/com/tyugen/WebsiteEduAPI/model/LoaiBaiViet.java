@@ -10,7 +10,6 @@ import java.util.Set;
 
 @Entity
 @Table
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class LoaiBaiViet {
@@ -25,4 +24,27 @@ public class LoaiBaiViet {
     @OneToMany(mappedBy = "loaiBaiViet", cascade = CascadeType.REMOVE)
     private Set<ChuDe> chuDes;
 
+    public Integer getLoaiBaiVietID() {
+        return loaiBaiVietID;
+    }
+
+    public void setLoaiBaiVietID(Integer loaiBaiVietID) {
+        this.loaiBaiVietID = loaiBaiVietID;
+    }
+
+    public String getTenLoai() {
+        return tenLoai;
+    }
+
+    public void setTenLoai(String tenLoai) {
+        this.tenLoai = tenLoai;
+    }
+
+    public Set<ChuDe> getChuDes() {
+        return chuDes;
+    }
+
+    public void setChuDes(Set<ChuDe> chuDes) {
+        this.chuDes = chuDes;
+    }
 }

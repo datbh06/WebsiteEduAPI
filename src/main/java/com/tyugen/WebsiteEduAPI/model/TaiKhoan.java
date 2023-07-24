@@ -44,4 +44,60 @@ public class TaiKhoan {
     @OneToMany(mappedBy = "taiKhoan", cascade = CascadeType.REMOVE)
     @JsonIgnoreProperties("taiKhoan")
     private Set<DangKyHoc> dangKyHocs;
+
+    public Integer getTaiKhoanID() {
+        return taiKhoanID;
+    }
+
+    public void setTaiKhoanID(Integer taiKhoanID) {
+        this.taiKhoanID = taiKhoanID;
+    }
+
+    public String getTenNguoiDung() {
+        return tenNguoiDung;
+    }
+
+    public void setTenNguoiDung(String tenNguoiDung) {
+        this.tenNguoiDung = tenNguoiDung;
+    }
+
+    public String getTaiKhoan() {
+        return taiKhoan;
+    }
+
+    public void setTaiKhoan(String taiKhoan) {
+        this.taiKhoan = taiKhoan;
+    }
+
+    public String getMatKhau() {
+        return matKhau;
+    }
+
+    public void setMatKhau(String matKhau) {
+        this.matKhau = matKhau;
+    }
+
+    public QuyenHan getQuyenHan() {
+        return quyenHan;
+    }
+
+    public void setQuyenHan(QuyenHan quyenHan) {
+        this.quyenHan = quyenHan;
+    }
+
+    public Set<BaiViet> getBaiViets() {
+        return baiViets;
+    }
+
+    public void setBaiViets(Set<BaiViet> baiViets) {
+        this.baiViets = baiViets;
+    }
+
+    public Set<DangKyHoc> getDangKyHocs() {
+        return dangKyHocs;
+    }
+
+    public void setDangKyHocs(Set<DangKyHoc> dangKyHocs) {
+        this.dangKyHocs = dangKyHocs;
+    }
 }

@@ -13,7 +13,6 @@ import java.util.Set;
 
 @Entity
 @Table
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class BaiViet {
@@ -50,4 +49,76 @@ public class BaiViet {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "taiKhoanID", foreignKey = @ForeignKey(name = "fk_baiviet_taikhoan"))
     private TaiKhoan taiKhoan;
+
+    public Integer getBaiVietID() {
+        return baiVietID;
+    }
+
+    public void setBaiVietID(Integer baiVietID) {
+        this.baiVietID = baiVietID;
+    }
+
+    public String getTenBaiViet() {
+        return tenBaiViet;
+    }
+
+    public void setTenBaiViet(String tenBaiViet) {
+        this.tenBaiViet = tenBaiViet;
+    }
+
+    public String getTenTacGia() {
+        return tenTacGia;
+    }
+
+    public void setTenTacGia(String tenTacGia) {
+        this.tenTacGia = tenTacGia;
+    }
+
+    public String getNoiDung() {
+        return noiDung;
+    }
+
+    public void setNoiDung(String noiDung) {
+        this.noiDung = noiDung;
+    }
+
+    public String getNoiDungNgan() {
+        return noiDungNgan;
+    }
+
+    public void setNoiDungNgan(String noiDungNgan) {
+        this.noiDungNgan = noiDungNgan;
+    }
+
+    public Date getThoiGianTao() {
+        return thoiGianTao;
+    }
+
+    public void setThoiGianTao(Date thoiGianTao) {
+        this.thoiGianTao = thoiGianTao;
+    }
+
+    public String getHinhAnh() {
+        return hinhAnh;
+    }
+
+    public void setHinhAnh(String hinhAnh) {
+        this.hinhAnh = hinhAnh;
+    }
+
+    public ChuDe getChuDes() {
+        return chuDes;
+    }
+
+    public void setChuDes(ChuDe chuDes) {
+        this.chuDes = chuDes;
+    }
+
+    public TaiKhoan getTaiKhoan() {
+        return taiKhoan;
+    }
+
+    public void setTaiKhoan(TaiKhoan taiKhoan) {
+        this.taiKhoan = taiKhoan;
+    }
 }
