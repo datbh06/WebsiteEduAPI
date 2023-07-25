@@ -12,6 +12,7 @@ import jakarta.validation.ValidatorFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -123,6 +124,22 @@ public class KhoaHocController {
     public ResponseEntity<?> getAllKhoaHoc() {
         Optional<List<KhoaHoc>> optionalKhoaHocList = Optional.of(khoaHocRepository.findAll());
         return ResponseEntity.ok(optionalKhoaHocList.get());
+    }
+
+    /**
+     * Gets a KhoaHoc object from the database by its name
+     *
+     * @param tenKhoaHoc the name of the KhoaHoc object to be retrieved
+     * @return a ResponseEntity containing the retrieved KhoaHoc object
+     */
+    @GetMapping("/find/{tenKhoaHoc}")
+    public ResponseEntity<?> findKhoaHocByName(@PathVariable("tenKhoaHoc") String tenKhoaHoc) {
+        Optional<KhoaHoc> khoaHoc = Optional.ofNullable((KhoaHoc) khoaHocRepository.findByTenKhoaHoc(tenKhoaHoc));
+        if (khoaHoc.isPresent()) {
+            return ResponseEntity.ok(khoaHoc.get());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
 }
