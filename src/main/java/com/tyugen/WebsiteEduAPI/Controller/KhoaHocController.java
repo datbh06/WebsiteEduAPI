@@ -114,4 +114,15 @@ public class KhoaHocController {
         }
     }
 
+    /**
+     * Gets all KhoaHoc objects from the database.
+     *
+     * @return a ResponseEntity containing the retrieved KhoaHoc object
+     */
+    @GetMapping
+    public ResponseEntity<?> getAllKhoaHoc() {
+        Optional<List<KhoaHoc>> optionalKhoaHocList = Optional.of(khoaHocRepository.findAll());
+        return ResponseEntity.ok(optionalKhoaHocList.get());
+    }
+
 }
