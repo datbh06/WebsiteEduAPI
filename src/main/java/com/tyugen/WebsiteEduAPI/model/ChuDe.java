@@ -17,7 +17,6 @@ import java.util.Set;
 @NoArgsConstructor
 public class ChuDe {
     @Id
-    @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer chuDeID;
 

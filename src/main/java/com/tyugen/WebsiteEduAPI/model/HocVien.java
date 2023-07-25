@@ -17,7 +17,6 @@ import java.util.Set;
 public class HocVien {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @NotNull
     private Integer hocVienID;
 
     @Column

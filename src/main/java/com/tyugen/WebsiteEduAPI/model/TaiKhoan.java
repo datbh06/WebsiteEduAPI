@@ -17,7 +17,6 @@ import java.util.Set;
 @NoArgsConstructor
 public class TaiKhoan {
     @Id
-    @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer taiKhoanID;
 

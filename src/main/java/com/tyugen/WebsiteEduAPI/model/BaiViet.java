@@ -17,7 +17,6 @@ import java.util.Set;
 @NoArgsConstructor
 public class BaiViet {
     @Id
-    @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer baiVietID;
 
@@ -33,7 +32,7 @@ public class BaiViet {
     private String noiDung;
 
     @Column
-    @Max(value = 1000, message = "Nội dung ngắn không được vượt quá 1000 ký tự")
+    @Size(max = 1000, message = "Nội dung ngắn không được vượt quá 1000 ký tự")
     private String noiDungNgan;
 
     @Column
