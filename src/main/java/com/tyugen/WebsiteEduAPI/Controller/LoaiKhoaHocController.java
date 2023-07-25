@@ -83,4 +83,21 @@ public class LoaiKhoaHocController {
         }
     }
 
+    /**
+     * Deletes a LoaiKhoaHoc object with the specified ID.
+     *
+     * @param id the ID of the LoaiKhoaHoc object to be deleted
+     * @return a ResponseEntity indicating the result of the delete operation
+     */
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteLoaiKhoaHoc(@PathVariable("id") Integer id) {
+        Optional<LoaiKhoaHoc> loaiKhoaHoc = loaiKhoaHocRepository.findById(id);
+        if (loaiKhoaHoc.isPresent()) {
+            loaiKhoaHocRepository.deleteById(id);
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 }
