@@ -16,7 +16,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/loaikhoahoc")
+@RequestMapping("/api/v1/loaikhoahoc")
 public class LoaiKhoaHocController {
 
     private final LoaiKhoaHocRepository loaiKhoaHocRepository;
