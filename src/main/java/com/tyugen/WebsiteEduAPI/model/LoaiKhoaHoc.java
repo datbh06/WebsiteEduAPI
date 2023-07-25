@@ -2,11 +2,8 @@ package com.tyugen.WebsiteEduAPI.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Set;
@@ -24,7 +21,7 @@ public class LoaiKhoaHoc {
     @Size(max = 30, message = "Tên loại khóa học không được vượt quá 30 ký tự")
     private String tenLoaiKhoaHoc;
 
-    @OneToMany(mappedBy = "loaiKhoaHoc", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "loaiKhoaHoc", cascade = CascadeType.ALL)
     @JsonIgnoreProperties("loaiKhoaHoc")
     Set<KhoaHoc> khoaHocs;
 
@@ -50,5 +47,13 @@ public class LoaiKhoaHoc {
 
     public void setKhoaHocs(Set<KhoaHoc> khoaHocs) {
         this.khoaHocs = khoaHocs;
+    }
+
+    @Override
+    public String toString() {
+        return " LoaiKhoaHoc{" + "\n" +
+                "    loaiKhoaHocID= " + loaiKhoaHocID + "\n" +
+                "    tenLoaiKhoaHoc= " + tenLoaiKhoaHoc + "\n" +
+                " }";
     }
 }

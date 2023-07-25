@@ -2,14 +2,10 @@ package com.tyugen.WebsiteEduAPI.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.sql.Date;
 import java.util.Set;
 
 @Entity
@@ -31,7 +27,7 @@ public class KhoaHoc {
     @Column
     private String noiDung;
     @Column
-    private Float hocPhi;
+    private Double hocPhi;
     @Column
     private Integer soHocVien;
     @Column
@@ -43,7 +39,7 @@ public class KhoaHoc {
     @JoinColumn(name = "loaiKhoaHocID", foreignKey = @ForeignKey(name = "fk_khoahoc_loaikhoahoc"))
     private LoaiKhoaHoc loaiKhoaHoc;
 
-    @OneToMany(mappedBy = "khoaHoc", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "khoaHoc", cascade = CascadeType.ALL)
     @JsonIgnoreProperties("khoaHoc")
     private Set<DangKyHoc> dangKyHocs;
 
@@ -87,11 +83,11 @@ public class KhoaHoc {
         this.noiDung = noiDung;
     }
 
-    public Float getHocPhi() {
+    public Double getHocPhi() {
         return hocPhi;
     }
 
-    public void setHocPhi(Float hocPhi) {
+    public void setHocPhi(Double hocPhi) {
         this.hocPhi = hocPhi;
     }
 
@@ -133,5 +129,21 @@ public class KhoaHoc {
 
     public void setDangKyHocs(Set<DangKyHoc> dangKyHocs) {
         this.dangKyHocs = dangKyHocs;
+    }
+
+    @Override
+    public String toString() {
+        return "\n" + "KhoaHoc{" + "\n" +
+                " khoaHocID= " + khoaHocID + '\n' +
+                " tenKhoaHoc= " + tenKhoaHoc + '\n' +
+                " thoiGianHoc= " + thoiGianHoc + '\n' +
+                " gioiThieu= " + gioiThieu + '\n' +
+                " noiDung= " + noiDung + '\n' +
+                " hocPhi= " + hocPhi + '\n' +
+                " soHocVien= " + soHocVien + '\n' +
+                " soLuongMon= " + soLuongMon + '\n' +
+                " hinhAnh= " + hinhAnh + '\n' +
+                loaiKhoaHoc + '\n' +
+                "}" + '\n';
     }
 }

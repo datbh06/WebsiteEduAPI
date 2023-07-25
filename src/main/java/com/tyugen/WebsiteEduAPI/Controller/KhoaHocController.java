@@ -2,17 +2,17 @@ package com.tyugen.WebsiteEduAPI.Controller;
 
 import com.google.gson.Gson;
 import com.tyugen.WebsiteEduAPI.model.KhoaHoc;
-import com.tyugen.WebsiteEduAPI.model.LoaiKhoaHoc;
 import com.tyugen.WebsiteEduAPI.repository.HocVienRepository;
 import com.tyugen.WebsiteEduAPI.repository.KhoaHocRepository;
+import com.tyugen.WebsiteEduAPI.service.KhoaHocService;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 import jakarta.validation.ValidatorFactory;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -22,6 +22,8 @@ import java.util.stream.Collectors;
 @RequestMapping("api/v1/khoahoc")
 public class KhoaHocController {
 
+    private final KhoaHocService khoaHocService;
+
     private final KhoaHocRepository khoaHocRepository;
 
     private final HocVienRepository hocVienRepository;
@@ -29,10 +31,12 @@ public class KhoaHocController {
     /**
      * Constructs a new KhoaHocController object with the specified KhoaHocRepository.
      *
+     * @param khoaHocService    the KhoaHocService to be used by this controller
      * @param khoaHocRepository the khoaHocRepository to be used by this controller
      * @param hocVienRepository the hocVienRepository to be used by this controller
      */
-    public KhoaHocController(KhoaHocRepository khoaHocRepository, HocVienRepository hocVienRepository) {
+    public KhoaHocController(KhoaHocService khoaHocService, KhoaHocRepository khoaHocRepository, HocVienRepository hocVienRepository) {
+        this.khoaHocService = khoaHocService;
         this.khoaHocRepository = khoaHocRepository;
         this.hocVienRepository = hocVienRepository;
     }
@@ -141,5 +145,20 @@ public class KhoaHocController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    /**
+     * Gets all KhoaHoc objects from the database displaying the specified number of objects per page.
+     *
+     * @param page the page number
+     * @param size the number of objects per page
+     * @return a Page containing the KhoaHoc objects
+     */
+    @GetMapping("/page")
+    public Page<KhoaHoc> getKhoaHocByPage(
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = "5") int size) {
+        return khoaHocService.getKhoaHocByPage(page, size);
+    }
+
 
 }

@@ -1,9 +1,7 @@
 package com.tyugen.WebsiteEduAPI.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Set;
@@ -20,7 +18,7 @@ public class LoaiBaiViet {
     @Column
     private String tenLoai;
 
-    @OneToMany(mappedBy = "loaiBaiViet", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "loaiBaiViet", cascade = CascadeType.ALL)
     private Set<ChuDe> chuDes;
 
     public Integer getLoaiBaiVietID() {

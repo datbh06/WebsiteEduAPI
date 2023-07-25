@@ -2,7 +2,6 @@ package com.tyugen.WebsiteEduAPI.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -36,11 +35,11 @@ public class TaiKhoan {
     @JoinColumn(name = "quyenHanID", foreignKey = @ForeignKey(name = "fk_taikhoan_quyenhan"))
     private QuyenHan quyenHan;
 
-    @OneToMany(mappedBy = "taiKhoan", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "taiKhoan", cascade = CascadeType.ALL)
     @JsonIgnoreProperties("taiKhoan")
     private Set<BaiViet> baiViets;
 
-    @OneToMany(mappedBy = "taiKhoan", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "taiKhoan", cascade = CascadeType.ALL)
     @JsonIgnoreProperties("taiKhoan")
     private Set<DangKyHoc> dangKyHocs;
 
