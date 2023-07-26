@@ -49,11 +49,4 @@ public class LoaiKhoaHoc {
         this.khoaHocs = khoaHocs;
     }
 
-    @Override
-    public String toString() {
-        return " LoaiKhoaHoc{" + "\n" +
-                "    loaiKhoaHocID= " + loaiKhoaHocID + "\n" +
-                "    tenLoaiKhoaHoc= " + tenLoaiKhoaHoc + "\n" +
-                " }";
-    }
 }

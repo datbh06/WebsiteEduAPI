@@ -131,19 +131,4 @@ public class KhoaHoc {
         this.dangKyHocs = dangKyHocs;
     }
 
-    @Override
-    public String toString() {
-        return "\n" + "KhoaHoc{" + "\n" +
-                " khoaHocID= " + khoaHocID + '\n' +
-                " tenKhoaHoc= " + tenKhoaHoc + '\n' +
-                " thoiGianHoc= " + thoiGianHoc + '\n' +
-                " gioiThieu= " + gioiThieu + '\n' +
-                " noiDung= " + noiDung + '\n' +
-                " hocPhi= " + hocPhi + '\n' +
-                " soHocVien= " + soHocVien + '\n' +
-                " soLuongMon= " + soLuongMon + '\n' +
-                " hinhAnh= " + hinhAnh + '\n' +
-                loaiKhoaHoc + '\n' +
-                "}" + '\n';
-    }
 }
