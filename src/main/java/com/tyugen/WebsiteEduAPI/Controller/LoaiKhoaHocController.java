@@ -1,53 +1,33 @@
 package com.tyugen.WebsiteEduAPI.Controller;
 
-import com.google.gson.Gson;
-import com.tyugen.WebsiteEduAPI.model.LoaiKhoaHoc;
-import com.tyugen.WebsiteEduAPI.repository.LoaiKhoaHocRepository;
-import jakarta.validation.ConstraintViolation;
-import jakarta.validation.Validation;
-import jakarta.validation.Validator;
-import jakarta.validation.ValidatorFactory;
+import com.tyugen.WebsiteEduAPI.service.LoaiKhoaHocService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/loaikhoahoc")
 public class LoaiKhoaHocController {
 
-    private final LoaiKhoaHocRepository loaiKhoaHocRepository;
+    private final LoaiKhoaHocService loaiKhoaHocService;
 
     /**
      * Constructs a new LoaiKhoaHocController object with the specified LoaiKhoaHocRepository.
      *
-     * @param loaiKhoaHocRepository the LoaiKhoaHocRepository to be used by this controller
+     * @param loaiKhoaHocService the LoaiKhoaHocService to be used by this controller
      */
-    public LoaiKhoaHocController(LoaiKhoaHocRepository loaiKhoaHocRepository) {
-        this.loaiKhoaHocRepository = loaiKhoaHocRepository;
+    public LoaiKhoaHocController(LoaiKhoaHocService loaiKhoaHocService) {
+        this.loaiKhoaHocService = loaiKhoaHocService;
     }
 
+    /**
+     * Adds a new LoaiKhoaHoc object to the database.
+     *
+     * @param loaiKhoaHoc a JSON representation of the new LoaiKhoaHoc object
+     * @return a ResponseEntity indicating the result of the add operation
+     */
     @PostMapping("/add")
     public ResponseEntity<?> addLoaiKhoaHoc(@RequestBody String loaiKhoaHoc) {
-        Gson gson = new Gson();
-        LoaiKhoaHoc loaiKhoaHocNew = gson.fromJson(loaiKhoaHoc, LoaiKhoaHoc.class);
-        Validator validator;
-        try (ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory()) {
-            validator = validatorFactory.getValidator();
-        }
-        Set<ConstraintViolation<LoaiKhoaHoc>> violations = validator.validate(loaiKhoaHocNew);
-        if (violations.size() > 0) {
-            List<String> errorMessages = violations.stream()
-                    .map(ConstraintViolation::getMessage)
-                    .collect(Collectors.toList());
-            return ResponseEntity.badRequest().body(errorMessages);
-        } else {
-            loaiKhoaHocRepository.save(loaiKhoaHocNew);
-            return ResponseEntity.ok().build();
-        }
+        return loaiKhoaHocService.addLoaiKhoaHoc(loaiKhoaHoc);
     }
 
     /**
@@ -59,28 +39,7 @@ public class LoaiKhoaHocController {
      */
     @PutMapping("/update/{id}")
     public ResponseEntity<?> updateLoaiKhoaHoc(@PathVariable("id") Integer id, @RequestBody String loaiKhoaHoc) {
-        Gson gson = new Gson();
-        LoaiKhoaHoc loaiKhoaHocNew = gson.fromJson(loaiKhoaHoc, LoaiKhoaHoc.class);
-        Optional<LoaiKhoaHoc> loaiKhoaHocOld = loaiKhoaHocRepository.findById(id);
-        if (loaiKhoaHocOld.isPresent()) {
-            Validator validator;
-            try (ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory()) {
-                validator = validatorFactory.getValidator();
-            }
-            Set<ConstraintViolation<LoaiKhoaHoc>> violations = validator.validate(loaiKhoaHocNew);
-            if (violations.size() > 0) {
-                List<String> errorMessages = violations.stream()
-                        .map(ConstraintViolation::getMessage)
-                        .collect(Collectors.toList());
-                return ResponseEntity.badRequest().body(errorMessages);
-            } else {
-                loaiKhoaHocNew.setLoaiKhoaHocID(id);
-                loaiKhoaHocRepository.save(loaiKhoaHocNew);
-                return ResponseEntity.ok().build();
-            }
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        return loaiKhoaHocService.updateLoaiKhoaHoc(id, loaiKhoaHoc);
     }
 
     /**
@@ -91,13 +50,7 @@ public class LoaiKhoaHocController {
      */
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteLoaiKhoaHoc(@PathVariable("id") Integer id) {
-        Optional<LoaiKhoaHoc> loaiKhoaHoc = loaiKhoaHocRepository.findById(id);
-        if (loaiKhoaHoc.isPresent()) {
-            loaiKhoaHocRepository.deleteById(id);
-            return ResponseEntity.ok().build();
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        return loaiKhoaHocService.deleteLoaiKhoaHoc(id);
     }
 
 }
