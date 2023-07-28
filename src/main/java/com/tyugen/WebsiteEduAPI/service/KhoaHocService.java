@@ -13,8 +13,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 import java.util.Optional;
@@ -68,7 +66,6 @@ public class KhoaHocService {
      * @param khoaHoc a JSON representation of the updated KhoaHoc object
      * @return a ResponseEntity indicating the result of the update operation
      */
-
     public ResponseEntity<?> updateKhoaHoc(int id, String khoaHoc) {
         Gson gson = new Gson();
         KhoaHoc khoaHocNew = gson.fromJson(khoaHoc, KhoaHoc.class);
