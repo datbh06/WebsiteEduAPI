@@ -3,8 +3,6 @@ package com.tyugen.WebsiteEduAPI.service;
 import com.google.gson.Gson;
 import com.tyugen.WebsiteEduAPI.exceptions.ResourceNotFoundException;
 import com.tyugen.WebsiteEduAPI.model.KhoaHoc;
-import com.tyugen.WebsiteEduAPI.repository.DangKyHocRepository;
-import com.tyugen.WebsiteEduAPI.repository.HocVienRepository;
 import com.tyugen.WebsiteEduAPI.repository.KhoaHocRepository;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
@@ -15,7 +13,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 import java.util.Optional;
@@ -25,20 +24,14 @@ import java.util.stream.Collectors;
 @Service
 public class KhoaHocService {
     private final KhoaHocRepository khoaHocRepository;
-    private final HocVienRepository hocVienRepository;
-    private final DangKyHocRepository dangKyHocRepository;
 
     /**
      * Constructs a new KhoaHocService object with the specified KhoaHocRepository.
      *
-     * @param khoaHocRepository   the khoaHocRepository to be used by this service
-     * @param hocVienRepository   the hocVienRepository to be used by this service
-     * @param dangKyHocRepository the dangKyHocRepository to be used by this service
+     * @param khoaHocRepository the khoaHocRepository to be used by this service
      */
-    public KhoaHocService(KhoaHocRepository khoaHocRepository, HocVienRepository hocVienRepository, DangKyHocRepository dangKyHocRepository) {
+    public KhoaHocService(KhoaHocRepository khoaHocRepository) {
         this.khoaHocRepository = khoaHocRepository;
-        this.hocVienRepository = hocVienRepository;
-        this.dangKyHocRepository = dangKyHocRepository;
     }
 
     /**
