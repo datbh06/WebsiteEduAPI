@@ -6,6 +6,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * KhoaHocController is a RestController that handles HTTP requests for the KhoaHoc API.
+ */
 @RestController
 @RequestMapping("api/v1/khoahoc")
 public class KhoaHocController {
@@ -98,7 +101,7 @@ public class KhoaHocController {
      * @return an HTTP 200 OK response
      */
     @PutMapping("/{id}/sohocvien")
-    public ResponseEntity<KhoaHoc> updateSoHocVien(@PathVariable Integer id) {
+    public ResponseEntity<KhoaHoc> updateSoHocVien(@PathVariable int id) {
         khoaHocService.updateSoHocVien(id);
         return ResponseEntity.ok().build();
     }

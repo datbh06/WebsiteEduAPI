@@ -40,7 +40,7 @@ public class KhoaHocService {
      * @param khoaHoc a JSON representation of the new KhoaHoc object
      * @return a ResponseEntity indicating the result of the add operation
      */
-    public ResponseEntity<?> addKhoaHoc(@RequestBody String khoaHoc) {
+    public ResponseEntity<?> addKhoaHoc(String khoaHoc) {
         Gson gson = new Gson();
         KhoaHoc khoaHocNew = gson.fromJson(khoaHoc, KhoaHoc.class);
 
@@ -69,7 +69,7 @@ public class KhoaHocService {
      * @return a ResponseEntity indicating the result of the update operation
      */
 
-    public ResponseEntity<?> updateKhoaHoc(@PathVariable("id") int id, @RequestBody String khoaHoc) {
+    public ResponseEntity<?> updateKhoaHoc(int id, String khoaHoc) {
         Gson gson = new Gson();
         KhoaHoc khoaHocNew = gson.fromJson(khoaHoc, KhoaHoc.class);
         Optional<KhoaHoc> khoaHocOld = khoaHocRepository.findById(id);
@@ -100,7 +100,7 @@ public class KhoaHocService {
      * @param id the ID of the KhoaHoc object to be deleted
      * @return a ResponseEntity indicating the result of the delete operation
      */
-    public ResponseEntity<?> deleteKhoaHoc(@PathVariable("id") int id) {
+    public ResponseEntity<?> deleteKhoaHoc(int id) {
         Optional<KhoaHoc> khoaHoc = khoaHocRepository.findById(id);
         if (khoaHoc.isPresent()) {
             khoaHocRepository.deleteById(id);
@@ -126,7 +126,7 @@ public class KhoaHocService {
      * @param tenKhoaHoc the name of the KhoaHoc object to be retrieved
      * @return a ResponseEntity containing the retrieved KhoaHoc object
      */
-    public ResponseEntity<?> findKhoaHocByName(@PathVariable("tenKhoaHoc") String tenKhoaHoc) {
+    public ResponseEntity<?> findKhoaHocByName(String tenKhoaHoc) {
         Optional<KhoaHoc> khoaHoc = Optional.ofNullable(khoaHocRepository.findByTenKhoaHoc(tenKhoaHoc));
         if (khoaHoc.isPresent()) {
             return ResponseEntity.ok(khoaHoc.get());
@@ -153,7 +153,7 @@ public class KhoaHocService {
      * @param khoaHocID the ID of the KhoaHoc object to update
      * @throws ResourceNotFoundException if the KhoaHoc object with the given ID is not found
      */
-    public void updateSoHocVien(Integer khoaHocID) {
+    public void updateSoHocVien(int khoaHocID) {
         KhoaHoc khoaHoc = khoaHocRepository.findById(khoaHocID).orElseThrow(()
                 -> new ResourceNotFoundException("Khóa học không tồn tại"));
         Integer soHocVien = khoaHoc.getSoHocVien();
