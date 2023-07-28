@@ -36,6 +36,7 @@ public class KhoaHoc {
     private String hinhAnh;
 
     @ManyToOne(fetch = FetchType.EAGER)
+    @JsonIgnoreProperties("khoaHocs")
     @JoinColumn(name = "loaiKhoaHocID", foreignKey = @ForeignKey(name = "fk_khoahoc_loaikhoahoc"))
     private LoaiKhoaHoc loaiKhoaHoc;
 
