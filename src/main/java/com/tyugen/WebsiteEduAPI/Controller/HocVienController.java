@@ -2,11 +2,11 @@ package com.tyugen.WebsiteEduAPI.Controller;
 
 import com.tyugen.WebsiteEduAPI.service.HocVienService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+/**
+ * HocVienController is a RestController that handles HTTP requests for the HocVien API.
+ */
 @RestController
 @RequestMapping("/api/v1/hocvien")
 public class HocVienController {
@@ -30,5 +30,17 @@ public class HocVienController {
     @PostMapping("/add")
     public ResponseEntity<?> addHocVien(@RequestBody String hocVien) {
         return hocVienService.addHocVien(hocVien);
+    }
+
+    /**
+     * Updates an existing HocVien object in the database.
+     *
+     * @param id      the ID of the HocVien object to be updated
+     * @param hocVien a JSON representation of the updated HocVien object
+     * @return a ResponseEntity indicating the result of the update operation
+     */
+    @PutMapping("/update/{id}")
+    public ResponseEntity<?> updateHocVien(@PathVariable("id") int id, @RequestBody String hocVien) {
+        return hocVienService.updateHocVien(id, hocVien);
     }
 }
