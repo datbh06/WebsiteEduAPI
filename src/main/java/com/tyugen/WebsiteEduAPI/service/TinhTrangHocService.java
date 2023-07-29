@@ -90,4 +90,19 @@ public class TinhTrangHocService {
         }
     }
 
+    /**
+     * Deletes the TinhTrangHoc object with the specified ID.
+     *
+     * @param id the ID of the TinhTrangHoc object to be deleted
+     * @return a ResponseEntity indicating the result of the delete operation
+     */
+    public ResponseEntity<?> deleteTinhTrang(int id) {
+        Optional<TinhTrangHoc> tinhTrangHoc = tinhTrangHocRepository.findById(id);
+        if (tinhTrangHoc.isPresent()) {
+            tinhTrangHocRepository.deleteById(id);
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }

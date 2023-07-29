@@ -43,4 +43,15 @@ public class TinhTrangHocController {
     public ResponseEntity<?> updateTinhTrangHoc(@PathVariable("id") int id, @RequestBody String tinhTrangHoc) {
         return tinhTrangHocService.updateTinhTrang(id, tinhTrangHoc);
     }
+
+    /**
+     * Deletes the TinhTrangHoc object with the specified id.
+     *
+     * @param id the ID of the TinhTrangHoc object to be deleted
+     * @return a ResponseEntity indicating the result of the delete operation
+     */
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteTinhTrangHoc(@PathVariable("id") int id) {
+        return tinhTrangHocService.deleteTinhTrang(id);
+    }
 }
