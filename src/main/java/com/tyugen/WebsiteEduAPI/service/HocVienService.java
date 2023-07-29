@@ -96,4 +96,21 @@ public class HocVienService {
             return ResponseEntity.notFound().build();
         }
     }
+
+    /**
+     * Deletes an existing HocVien object in the database.
+     *
+     * @param id the ID of the HocVien object to delete
+     * @return a ResponseEntity indicating the result of the delete operation
+     */
+    public ResponseEntity<?> deleteHocVien(int id) {
+        Optional<HocVien> hocVien = hocVienRepository.findById(id);
+
+        if (hocVien.isPresent()) {
+            hocVienRepository.deleteById(id);
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }

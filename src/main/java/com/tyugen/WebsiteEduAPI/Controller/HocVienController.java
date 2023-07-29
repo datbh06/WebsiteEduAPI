@@ -43,4 +43,15 @@ public class HocVienController {
     public ResponseEntity<?> updateHocVien(@PathVariable("id") int id, @RequestBody String hocVien) {
         return hocVienService.updateHocVien(id, hocVien);
     }
+
+    /**
+     * Deletes an existing HocVien object from the database.
+     *
+     * @param id the ID of the HocVien object to be deleted
+     * @return a ResponseEntity indicating the result of the delete operation
+     */
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteHocVien(@PathVariable("id") int id) {
+        return hocVienService.deleteHocVien(id);
+    }
 }
