@@ -4,7 +4,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.tyugen.WebsiteEduAPI.Adapter.DateTypeAdapter;
 import com.tyugen.WebsiteEduAPI.model.HocVien;
-import com.tyugen.WebsiteEduAPI.model.KhoaHoc;
 import com.tyugen.WebsiteEduAPI.repository.HocVienRepository;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
