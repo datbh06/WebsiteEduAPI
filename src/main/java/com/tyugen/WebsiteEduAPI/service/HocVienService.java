@@ -166,4 +166,15 @@ public class HocVienService {
         return hocVienRepository.findAll(pageable);
     }
 
+    /**
+     * Retrieves a page of HocVien objects from the database searched by keyword of hoTen (Pagination)
+     *
+     * @param keyword  the keyword to search for
+     * @param pageable the paging information
+     * @return a Page containing a list of HocVien objects
+     */
+    public Page<HocVien> searchOnPage(String keyword, Pageable pageable) {
+        return hocVienRepository.findByHoTenContaining(keyword, pageable);
+    }
+
 }
