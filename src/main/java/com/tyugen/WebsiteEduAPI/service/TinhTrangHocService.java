@@ -105,4 +105,14 @@ public class TinhTrangHocService {
             return ResponseEntity.notFound().build();
         }
     }
+
+    /**
+     * Retrieves a list of TinhTrangHoc objects.
+     *
+     * @return a list of TinhTrangHoc objects
+     */
+    public ResponseEntity<List<TinhTrangHoc>> getAllTinhTrang() {
+        Optional<List<TinhTrangHoc>> optionalHocVienList = Optional.of(tinhTrangHocRepository.findAll());
+        return optionalHocVienList.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
 }

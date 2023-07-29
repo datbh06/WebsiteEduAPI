@@ -1,8 +1,11 @@
 package com.tyugen.WebsiteEduAPI.Controller;
 
+import com.tyugen.WebsiteEduAPI.model.TinhTrangHoc;
 import com.tyugen.WebsiteEduAPI.service.TinhTrangHocService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * Maps requests for the TinhTrangHoc API to the TinhTrangHocService.
@@ -53,5 +56,15 @@ public class TinhTrangHocController {
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteTinhTrangHoc(@PathVariable("id") int id) {
         return tinhTrangHocService.deleteTinhTrang(id);
+    }
+
+    /**
+     * Retrieves a list of all TinhTrangHoc objects.
+     *
+     * @return a list of all TinhTrangHoc objects
+     */
+    @GetMapping("/all")
+    public ResponseEntity<List<TinhTrangHoc>> getAllTinhTrangHoc() {
+        return tinhTrangHocService.getAllTinhTrang();
     }
 }
