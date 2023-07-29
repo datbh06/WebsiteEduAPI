@@ -36,7 +36,7 @@ public class LoaiKhoaHocService {
      * @param loaiKhoaHoc a JSON representation of the new LoaiKhoaHoc object
      * @return a ResponseEntity indicating the result of the add operation
      */
-    public ResponseEntity<?> addLoaiKhoaHoc(@RequestBody String loaiKhoaHoc) {
+    public ResponseEntity<?> addLoaiKhoaHoc(String loaiKhoaHoc) {
         Gson gson = new Gson();
         LoaiKhoaHoc loaiKhoaHocNew = gson.fromJson(loaiKhoaHoc, LoaiKhoaHoc.class);
         Validator validator;
@@ -44,7 +44,7 @@ public class LoaiKhoaHocService {
             validator = validatorFactory.getValidator();
         }
         Set<ConstraintViolation<LoaiKhoaHoc>> violations = validator.validate(loaiKhoaHocNew);
-        if (violations.size() > 0) {
+        if (!violations.isEmpty()) {
             List<String> errorMessages = violations.stream()
                     .map(ConstraintViolation::getMessage)
                     .collect(Collectors.toList());
@@ -62,7 +62,7 @@ public class LoaiKhoaHocService {
      * @param loaiKhoaHoc a JSON representation of the updated LoaiKhoaHoc object
      * @return a ResponseEntity indicating the result of the update operation
      */
-    public ResponseEntity<?> updateLoaiKhoaHoc(@PathVariable("id") Integer id, @RequestBody String loaiKhoaHoc) {
+    public ResponseEntity<?> updateLoaiKhoaHoc(Integer id,String loaiKhoaHoc) {
         Gson gson = new Gson();
         LoaiKhoaHoc loaiKhoaHocNew = gson.fromJson(loaiKhoaHoc, LoaiKhoaHoc.class);
         Optional<LoaiKhoaHoc> loaiKhoaHocOld = loaiKhoaHocRepository.findById(id);
@@ -72,7 +72,7 @@ public class LoaiKhoaHocService {
                 validator = validatorFactory.getValidator();
             }
             Set<ConstraintViolation<LoaiKhoaHoc>> violations = validator.validate(loaiKhoaHocNew);
-            if (violations.size() > 0) {
+            if (!violations.isEmpty()) {
                 List<String> errorMessages = violations.stream()
                         .map(ConstraintViolation::getMessage)
                         .collect(Collectors.toList());
@@ -93,7 +93,7 @@ public class LoaiKhoaHocService {
      * @param id the ID of the LoaiKhoaHoc object to be deleted
      * @return a ResponseEntity indicating the result of the delete operation
      */
-    public ResponseEntity<?> deleteLoaiKhoaHoc(@PathVariable("id") Integer id) {
+    public ResponseEntity<?> deleteLoaiKhoaHoc(Integer id) {
         Optional<LoaiKhoaHoc> loaiKhoaHoc = loaiKhoaHocRepository.findById(id);
         if (loaiKhoaHoc.isPresent()) {
             loaiKhoaHocRepository.deleteById(id);
