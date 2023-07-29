@@ -26,4 +26,12 @@ public interface HocVienRepository extends JpaRepository<HocVien, Integer> {
      * @return an Optional containing the HocVien object with the specified email if it exists
      */
     Optional<HocVien> findByEmail(String email);
+
+    /**
+     * Finds a HocVien object from the database by its soDienThoai.
+     *
+     * @param soDienThoai the soDienThoai of the HocVien object to be found
+     * @return an Optional containing the HocVien object with the specified soDienThoai if it exists
+     */
+    Optional<HocVien> findBySoDienThoai(String soDienThoai);
 }
