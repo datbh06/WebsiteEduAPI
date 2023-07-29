@@ -4,6 +4,7 @@ import com.tyugen.WebsiteEduAPI.model.HocVien;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 import java.util.Optional;
@@ -40,9 +41,10 @@ public interface HocVienRepository extends JpaRepository<HocVien, Integer> {
     /**
      * Finds a Page of HocVien objects from the database by their hoTen.
      *
-     * @param hoTen    the hoTen of the HocVien object to be found
+     * @param keyword  the hoTen of the HocVien object to be found
      * @param pageable the Pageable object used to construct the query
      * @return a Page containing the HocVien objects with the specified hoTen
      */
-    Page<HocVien> findByHoTenContaining(String hoTen, Pageable pageable);
+    @Query("SELECT h FROM HocVien h WHERE h.hoTen LIKE %:keyword%")
+    Page<HocVien> findByHoTenContaining(String keyword, Pageable pageable);
 }
