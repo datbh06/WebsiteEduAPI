@@ -2,6 +2,10 @@ package com.tyugen.WebsiteEduAPI.Controller;
 
 import com.tyugen.WebsiteEduAPI.model.HocVien;
 import com.tyugen.WebsiteEduAPI.service.HocVienService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -91,5 +95,21 @@ public class HocVienController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    /**
+     * Retrieves a page of HocVien objects from the database (Pagination)
+     *
+     * @param page   the page number to be returned (default: 0)
+     * @param size   the number of items to be returned per page (default: 5)
+     * @param sortBy the field to sort the results by (default: hocVienID)
+     * @return a Page containing a list of HocVien objects
+     */
+    @GetMapping("/page")
+    public Page<HocVien> findAll(@RequestParam(defaultValue = "0") int page,
+                                 @RequestParam(defaultValue = "5") int size,
+                                 @RequestParam(defaultValue = "hocVienID") String sortBy) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(sortBy));
+        return hocVienService.getAllOnPage(pageable);
     }
 }

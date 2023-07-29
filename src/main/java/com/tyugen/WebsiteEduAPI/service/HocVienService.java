@@ -9,6 +9,8 @@ import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 import jakarta.validation.ValidatorFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -153,4 +155,15 @@ public class HocVienService {
     public Optional<HocVien> getHocVienByEmail(String email) {
         return hocVienRepository.findByEmail(email);
     }
+
+    /**
+     * Retrieves a page of HocVien objects from the database (Pagination)
+     *
+     * @param pageable the paging information
+     * @return a Page containing a list of HocVien objects
+     */
+    public Page<HocVien> getAllOnPage(Pageable pageable) {
+        return hocVienRepository.findAll(pageable);
+    }
+
 }
