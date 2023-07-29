@@ -31,7 +31,7 @@ public class HocVienController {
      * @return a ResponseEntity indicating the result of the add operation
      */
     @PostMapping("/add")
-    public ResponseEntity<?> addHocVien(@RequestBody String hocVien) {
+    public ResponseEntity<?> addHocVien(@RequestBody HocVien hocVien) {
         return hocVienService.addHocVien(hocVien);
     }
 

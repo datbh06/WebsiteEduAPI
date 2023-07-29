@@ -41,22 +41,31 @@ public class HocVienService {
      * @param hocVien a JSON representation of the new HocVien object
      * @return a ResponseEntity indicating the result of the add operation
      */
-    public ResponseEntity<?> addHocVien(String hocVien) {
-        Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, new DateTypeAdapter()).create();
-        HocVien hocVienNew = gson.fromJson(hocVien, HocVien.class);
-
+    public ResponseEntity<?> addHocVien(HocVien hocVien) {
+        // Check if a HocVien object with the same email or soDienThoai value already exists
+        Optional<HocVien> existingHocVienByEmail = hocVienRepository.findByEmail(hocVien.getEmail());
+        Optional<HocVien> existingHocVienBySoDienThoai = hocVienRepository.findBySoDienThoai(hocVien.getSoDienThoai());
+        if (existingHocVienByEmail.isPresent()) {
+            // Return a badRequest response with an error message
+            return ResponseEntity.badRequest().body("A HocVien object with the same email value already exists");
+        } else if (existingHocVienBySoDienThoai.isPresent()) {
+            // Return a badRequest response with an error message
+            return ResponseEntity.badRequest().body("A HocVien object with the same soDienThoai value already exists");
+        }
         Validator validator;
         try (ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory()) {
             validator = validatorFactory.getValidator();
         }
 
-        Set<ConstraintViolation<HocVien>> violations = validator.validate(hocVienNew);
+        Set<ConstraintViolation<HocVien>> violations = validator.validate(hocVien);
 
         if (!violations.isEmpty()) {
-            List<String> errorMessages = violations.stream().map(ConstraintViolation::getMessage).collect(Collectors.toList());
+            List<String> errorMessages = violations.stream()
+                    .map(ConstraintViolation::getMessage)
+                    .collect(Collectors.toList());
             return ResponseEntity.badRequest().body(errorMessages);
         } else {
-            hocVienRepository.save(hocVienNew);
+            hocVienRepository.save(hocVien);
             return ResponseEntity.ok().build();
         }
     }
