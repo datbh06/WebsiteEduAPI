@@ -1,8 +1,11 @@
 package com.tyugen.WebsiteEduAPI.Controller;
 
+import com.tyugen.WebsiteEduAPI.model.HocVien;
 import com.tyugen.WebsiteEduAPI.service.HocVienService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 /**
  * HocVienController is a RestController that handles HTTP requests for the HocVien API.
@@ -73,5 +76,20 @@ public class HocVienController {
     @GetMapping("/list/{name}")
     public ResponseEntity<?> getHocVienByName(@PathVariable("name") String name) {
         return hocVienService.getHocVienByName(name);
+    }
+
+    /**
+     * Retrieves a list of HocVien objects by email from the database.
+     *
+     * @return a ResponseEntity containing a list of HocVien objects
+     */
+    @GetMapping("/list/email")
+    public ResponseEntity<?> findHocVienByEmail(@RequestParam String email) {
+        Optional<HocVien> hocVien = hocVienService.getHocVienByEmail(email);
+        if (hocVien.isPresent()) {
+            return ResponseEntity.ok(hocVien.get());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }
