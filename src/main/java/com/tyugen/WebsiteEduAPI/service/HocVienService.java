@@ -123,4 +123,15 @@ public class HocVienService {
         Optional<List<HocVien>> optionalHocVienList = Optional.of(hocVienRepository.findAll());
         return optionalHocVienList.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
+
+    /**
+     * Gets a HocVien object from the database by hoTen
+     *
+     * @param name hoTen of HocVien
+     * @return a ResponseEntity containing a HocVien object
+     */
+    public ResponseEntity<?> getHocVienByName(String name) {
+        Optional<List<HocVien>> optionalHocVienList = Optional.of(hocVienRepository.findByHoTen(name));
+        return optionalHocVienList.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
 }
