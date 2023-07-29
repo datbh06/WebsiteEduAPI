@@ -4,6 +4,7 @@ import com.tyugen.WebsiteEduAPI.model.HocVien;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * The HocVienRepository interface is used to define custom database methods for the HocVien class.
@@ -24,5 +25,5 @@ public interface HocVienRepository extends JpaRepository<HocVien, Integer> {
      * @param email the email of the HocVien object to be found
      * @return an Optional containing the HocVien object with the specified email if it exists
      */
-    List<HocVien> findByEmail(String email);
+    Optional<HocVien> findByEmail(String email);
 }
