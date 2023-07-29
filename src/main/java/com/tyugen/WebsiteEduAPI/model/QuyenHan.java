@@ -4,12 +4,14 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Set;
 
 @Entity
 @Table
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class QuyenHan {
@@ -25,27 +27,4 @@ public class QuyenHan {
     @JsonIgnoreProperties("quyenHan")
     private Set<TaiKhoan> taiKhoans;
 
-    public Integer getQuyenHanID() {
-        return quyenHanID;
-    }
-
-    public void setQuyenHanID(Integer quyenHanID) {
-        this.quyenHanID = quyenHanID;
-    }
-
-    public String getTenQuyenHan() {
-        return tenQuyenHan;
-    }
-
-    public void setTenQuyenHan(String tenQuyenHan) {
-        this.tenQuyenHan = tenQuyenHan;
-    }
-
-    public Set<TaiKhoan> getTaiKhoans() {
-        return taiKhoans;
-    }
-
-    public void setTaiKhoans(Set<TaiKhoan> taiKhoans) {
-        this.taiKhoans = taiKhoans;
-    }
 }
