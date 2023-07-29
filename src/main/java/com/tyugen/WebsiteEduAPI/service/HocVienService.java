@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.tyugen.WebsiteEduAPI.Adapter.DateTypeAdapter;
 import com.tyugen.WebsiteEduAPI.model.HocVien;
+import com.tyugen.WebsiteEduAPI.model.KhoaHoc;
 import com.tyugen.WebsiteEduAPI.repository.HocVienRepository;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
@@ -112,5 +113,15 @@ public class HocVienService {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    /**
+     * Gets a list of HocVien objects from the database.
+     *
+     * @return a ResponseEntity containing a list of HocVien objects
+     */
+    public ResponseEntity<?> getAllHocVien() {
+        Optional<List<HocVien>> optionalHocVienList = Optional.of(hocVienRepository.findAll());
+        return optionalHocVienList.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 }

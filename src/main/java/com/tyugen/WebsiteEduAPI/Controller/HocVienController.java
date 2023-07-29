@@ -54,4 +54,14 @@ public class HocVienController {
     public ResponseEntity<?> deleteHocVien(@PathVariable("id") int id) {
         return hocVienService.deleteHocVien(id);
     }
+
+    /**
+     * Retrieves a list of HocVien objects from the database.
+     *
+     * @return a ResponseEntity containing a list of HocVien objects
+     */
+    @GetMapping("/list")
+    public ResponseEntity<?> getHocViens() {
+        return hocVienService.getAllHocVien();
+    }
 }
