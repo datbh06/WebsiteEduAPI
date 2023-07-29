@@ -64,4 +64,14 @@ public class HocVienController {
     public ResponseEntity<?> getHocViens() {
         return hocVienService.getAllHocVien();
     }
+
+    /**
+     * Retrieves a list of HocVien objects by hoTen from the database.
+     *
+     * @return a ResponseEntity containing a list of HocVien objects
+     */
+    @GetMapping("/list/{name}")
+    public ResponseEntity<?> getHocVienByName(@PathVariable("name") String name) {
+        return hocVienService.getHocVienByName(name);
+    }
 }
