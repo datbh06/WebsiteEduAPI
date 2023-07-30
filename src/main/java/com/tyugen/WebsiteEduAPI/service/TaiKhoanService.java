@@ -127,4 +127,15 @@ public class TaiKhoanService {
         }
     }
 
+    /**
+     * Retrieves a list of TaiKhoan objects from the database.
+     *
+     * @return a ResponseEntity containing a list of TaiKhoan objects
+     */
+    public ResponseEntity<?> getAllTaiKhoan() {
+        Optional<List<TaiKhoan>> taiKhoanList = Optional.of(taiKhoanRepository.findAll());
+        return taiKhoanList.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+
 }

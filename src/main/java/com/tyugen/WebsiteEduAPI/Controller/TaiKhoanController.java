@@ -48,4 +48,15 @@ public class TaiKhoanController {
     public ResponseEntity<?> deleteTaiKhoan(@PathVariable("id") int id) {
         return taiKhoanService.deleteTaiKhoan(id);
     }
+
+    /**
+     * Retrieves a list of TaiKhoan objects from the database.
+     *
+     * @return a ResponseEntity containing a list of TaiKhoan objects
+     */
+    @GetMapping("/list")
+    public ResponseEntity<?> getTaiKhoanList() {
+        return taiKhoanService.getAllTaiKhoan();
+    }
+
 }
