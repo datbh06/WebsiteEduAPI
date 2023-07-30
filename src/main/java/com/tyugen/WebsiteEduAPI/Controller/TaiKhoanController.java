@@ -38,4 +38,14 @@ public class TaiKhoanController {
         return taiKhoanService.updateTaiKhoan(id, taiKhoan);
     }
 
+    /**
+     * Deletes an existing TaiKhoan object from the database.
+     *
+     * @param id the ID of the TaiKhoan object to be deleted
+     * @return a ResponseEntity indicating the result of the delete operation
+     */
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteTaiKhoan(@PathVariable("id") int id) {
+        return taiKhoanService.deleteTaiKhoan(id);
+    }
 }

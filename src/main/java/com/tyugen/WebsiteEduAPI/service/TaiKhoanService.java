@@ -109,4 +109,22 @@ public class TaiKhoanService {
             return ResponseEntity.badRequest().body("Account not found");
         }
     }
+
+    /**
+     * Deletes an existing TaiKhoan object from the database.
+     *
+     * @param id the ID of the TaiKhoan object to be deleted
+     * @return a ResponseEntity indicating the result of the delete operation
+     */
+    public ResponseEntity<?> deleteTaiKhoan(int id) {
+        Optional<TaiKhoan> taiKhoan = taiKhoanRepository.findById(id);
+
+        if (taiKhoan.isPresent()) {
+            taiKhoanRepository.deleteById(id);
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.badRequest().body("Account not found");
+        }
+    }
+
 }
