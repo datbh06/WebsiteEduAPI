@@ -59,4 +59,14 @@ public class TaiKhoanController {
         return taiKhoanService.getAllTaiKhoan();
     }
 
+    /**
+     * Retrieves a TaiKhoan object from the database by specified tenTaiKhoan
+     *
+     * @param tenTaiKhoan the tenTaiKhoan of the TaiKhoan object to be retrieved
+     * @return a ResponseEntity containing the retrieved TaiKhoan object
+     */
+    @GetMapping("/find")
+    public ResponseEntity<?> searchByTaiKhoan(@RequestParam("taiKhoan") String tenTaiKhoan) {
+        return taiKhoanService.getByTaiKhoan(tenTaiKhoan);
+    }
 }

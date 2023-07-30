@@ -1,6 +1,7 @@
 package com.tyugen.WebsiteEduAPI.service;
 
 import com.google.gson.Gson;
+import com.tyugen.WebsiteEduAPI.model.KhoaHoc;
 import com.tyugen.WebsiteEduAPI.model.TaiKhoan;
 import com.tyugen.WebsiteEduAPI.repository.TaiKhoanRepository;
 import jakarta.validation.ConstraintViolation;
@@ -137,5 +138,18 @@ public class TaiKhoanService {
         return taiKhoanList.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-
+    /**
+     * Retrieves a TaiKhoan object from the database by specified tenTaiKhoan
+     *
+     * @param tenTaiKhoan the tenTaiKhoan of the TaiKhoan object to be retrieved
+     * @return a ResponseEntity containing the retrieved TaiKhoan object
+     */
+    public ResponseEntity<?> getByTaiKhoan(String tenTaiKhoan) {
+        Optional<TaiKhoan> taiKhoan = Optional.ofNullable(taiKhoanRepository.findByTaiKhoan(tenTaiKhoan));
+        if (taiKhoan.isPresent()) {
+            return ResponseEntity.ok(taiKhoan.get());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }
