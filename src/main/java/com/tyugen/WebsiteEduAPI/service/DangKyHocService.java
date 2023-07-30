@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.tyugen.WebsiteEduAPI.Adapter.DateTypeAdapter;
 import com.tyugen.WebsiteEduAPI.model.DangKyHoc;
+import com.tyugen.WebsiteEduAPI.model.KhoaHoc;
 import com.tyugen.WebsiteEduAPI.repository.DangKyHocRepository;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -56,6 +58,38 @@ public class DangKyHocService {
         } else {
             dangKyHocRepository.save(dangKyHocNew);
             return ResponseEntity.ok().build();
+        }
+    }
+
+    /**
+     * This method is used to update an existing DangKyHoc object in the database.
+     *
+     * @param id        is the ID of the DangKyHoc object that needs to be updated.
+     * @param dangKyHoc is a JSON string that contains the information of the DangKyHoc object.
+     * @return a ResponseEntity object that contains the status of the request.
+     */
+    public ResponseEntity<?> updateDangKyHoc(int id, String dangKyHoc) {
+        Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, new DateTypeAdapter()).create();
+        DangKyHoc dangkyNew = gson.fromJson(dangKyHoc, DangKyHoc.class);
+        Optional<DangKyHoc> dangKyOld = dangKyHocRepository.findById(id);
+        if (dangKyOld.isPresent()) {
+            Validator validator;
+            try (ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory()) {
+                validator = validatorFactory.getValidator();
+            }
+            Set<ConstraintViolation<DangKyHoc>> violations = validator.validate(dangkyNew);
+            if (!violations.isEmpty()) {
+                List<String> errorMessages = violations.stream()
+                        .map(ConstraintViolation::getMessage)
+                        .collect(Collectors.toList());
+                return ResponseEntity.badRequest().body(errorMessages);
+            } else {
+                dangkyNew.setDangKyHocID(id);
+                dangKyHocRepository.save(dangkyNew);
+                return ResponseEntity.ok().build();
+            }
+        } else {
+            return ResponseEntity.notFound().build();
         }
     }
 }
