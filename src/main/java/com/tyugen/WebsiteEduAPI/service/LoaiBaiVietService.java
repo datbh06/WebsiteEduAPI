@@ -104,5 +104,15 @@ public class LoaiBaiVietService {
             return ResponseEntity.notFound().build();
         }
     }
+
+    /**
+     * Retrieves list of all LoaiBaiViet objects.
+     *
+     * @return a ResponseEntity containing a list of all LoaiBaiViet objects
+     */
+    public ResponseEntity<?> getAllLoaiBaiViet() {
+        Optional<List<LoaiBaiViet>> loaiBaiViet = Optional.of(loaiBaiVietRepository.findAll());
+        return loaiBaiViet.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+    }
 }
 

@@ -55,4 +55,14 @@ public class LoaiBaiVietController {
         return loaiBaiVietService.deleteLoaiBaiViet(id);
     }
 
+    /**
+     * Retrieve all LoaiBaiViet objects from the database.
+     *
+     * @return a ResponseEntity containing a List of all LoaiBaiViet objects
+     */
+    @GetMapping("/list")
+    public ResponseEntity<?> getAllLoaiBaiViet() {
+        return loaiBaiVietService.getAllLoaiBaiViet();
+    }
+
 }
