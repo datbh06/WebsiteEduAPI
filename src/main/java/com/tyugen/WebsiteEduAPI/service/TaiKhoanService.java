@@ -8,6 +8,8 @@ import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 import jakarta.validation.ValidatorFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -151,5 +153,15 @@ public class TaiKhoanService {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    /**
+     * Retrieves a page of TaiKhoan objects from the database (Pagination)
+     *
+     * @param pageable the Pageable object containing the page number and page size
+     * @return a Page containing a list of TaiKhoan objects
+     */
+    public Page<TaiKhoan> getOnPage(Pageable pageable) {
+        return taiKhoanRepository.findAll(pageable);
     }
 }

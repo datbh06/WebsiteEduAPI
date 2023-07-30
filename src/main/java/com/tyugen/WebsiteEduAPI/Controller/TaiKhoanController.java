@@ -1,6 +1,10 @@
 package com.tyugen.WebsiteEduAPI.Controller;
 
+import com.tyugen.WebsiteEduAPI.model.TaiKhoan;
 import com.tyugen.WebsiteEduAPI.service.TaiKhoanService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -69,4 +73,20 @@ public class TaiKhoanController {
     public ResponseEntity<?> searchByTaiKhoan(@RequestParam("taiKhoan") String tenTaiKhoan) {
         return taiKhoanService.getByTaiKhoan(tenTaiKhoan);
     }
+
+    /**
+     * Retrieves a page of TaiKhoan objects from the database (Pagination)
+     *
+     * @param page the page number (default: 0)
+     * @param size the number of TaiKhoan objects per page (default: 5)
+     * @return a Page containing a list of TaiKhoan objects
+     */
+    @GetMapping("page")
+    public Page<TaiKhoan> getOnPage(@RequestParam(defaultValue = "0") int page,
+                                    @RequestParam(defaultValue = "5") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return taiKhoanService.getOnPage(pageable);
+    }
+
+
 }
