@@ -47,4 +47,14 @@ public class DangKyHocController {
     public ResponseEntity<?> deleteDangKyHoc(@PathVariable("id") int id) {
         return dangKyHocService.deleteDangKyHoc(id);
     }
+
+    /**
+     * This method is used to get all DangKyHoc objects in the database.
+     *
+     * @return a ResponseEntity object that contains the status of the request.
+     */
+    @GetMapping("/list")
+    public ResponseEntity<?> getAllDangKyHoc() {
+        return dangKyHocService.getAllDangKyHoc();
+    }
 }

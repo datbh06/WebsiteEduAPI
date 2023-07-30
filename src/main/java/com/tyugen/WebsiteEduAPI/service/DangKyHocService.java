@@ -108,4 +108,14 @@ public class DangKyHocService {
             return ResponseEntity.notFound().build();
         }
     }
+
+    /**
+     * This method is used to get all DangKyHoc objects from the database.
+     *
+     * @return a ResponseEntity object that contains the status of the request.
+     */
+    public ResponseEntity<?> getAllDangKyHoc() {
+        Optional<List<DangKyHoc>> optionalDangKyHocList = Optional.of(dangKyHocRepository.findAll());
+        return optionalDangKyHocList.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
 }
