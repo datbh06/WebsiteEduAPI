@@ -23,7 +23,7 @@ public class KhoaHoc {
     @Size(max = 50, message = "Tên khóa học không được quá 50 ký tự")
     private String tenKhoaHoc;
     @Column
-    private Integer thoiGianHoc;
+    private int thoiGianHoc;
     @Column
     private String gioiThieu;
     @Column
@@ -45,6 +45,4 @@ public class KhoaHoc {
     @OneToMany(mappedBy = "khoaHoc", cascade = CascadeType.ALL)
     @JsonIgnoreProperties("khoaHoc")
     private Set<DangKyHoc> dangKyHocs;
-
-
 }
