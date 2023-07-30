@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -61,6 +62,51 @@ public class TaiKhoanService {
                     .map(ConstraintViolation::getMessage)
                     .collect(Collectors.toList());
             return ResponseEntity.badRequest().body(errorMessages);
+        }
+    }
+
+    /**
+     * Updates an existing TaiKhoan object in the database.
+     *
+     * @param id       the ID of the TaiKhoan object to be updated
+     * @param taiKhoan a JSON representation of the updated TaiKhoan object
+     * @return a ResponseEntity indicating the result of the update operation
+     */
+    public ResponseEntity<?> updateTaiKhoan(int id, String taiKhoan) {
+        Gson gson = new Gson();
+        TaiKhoan newTaiKhoan = gson.fromJson(taiKhoan, TaiKhoan.class);
+        Optional<TaiKhoan> oldTaiKhoan = taiKhoanRepository.findById(id);
+
+        if (taiKhoanRepository.existsByTaiKhoan(newTaiKhoan.getTaiKhoan())) {
+            TaiKhoan existingTaiKhoan = taiKhoanRepository.findByTaiKhoan(newTaiKhoan.getTaiKhoan());
+            if (existingTaiKhoan.getTaiKhoanID() != id) {
+                throw new RuntimeException("Account name already exists");
+            }
+        }
+        if (!newTaiKhoan.getMatKhau().matches("^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]+$")) {
+            throw new RuntimeException("Password must contain numbers and special characters");
+        }
+
+        if (oldTaiKhoan.isPresent()) {
+
+            Validator validator;
+            try (ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
+                validator = factory.getValidator();
+            }
+            Set<ConstraintViolation<TaiKhoan>> violations = validator.validate(newTaiKhoan);
+
+            if (violations.isEmpty()) {
+                newTaiKhoan.setTaiKhoanID(id);
+                taiKhoanRepository.save(newTaiKhoan);
+                return ResponseEntity.ok().build();
+            } else {
+                List<String> errorMessages = violations.stream()
+                        .map(ConstraintViolation::getMessage)
+                        .collect(Collectors.toList());
+                return ResponseEntity.badRequest().body(errorMessages);
+            }
+        } else {
+            return ResponseEntity.badRequest().body("Account not found");
         }
     }
 }
