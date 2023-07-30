@@ -36,4 +36,15 @@ public class DangKyHocController {
     public ResponseEntity<?> updateDangKyHoc(@PathVariable("id") int id, @RequestBody String dangKyHoc) {
         return dangKyHocService.updateDangKyHoc(id, dangKyHoc);
     }
+
+    /**
+     * This method is used to delete an existing DangKyHoc object in the database.
+     *
+     * @param id is the ID of the DangKyHoc object that needs to be deleted.
+     * @return a ResponseEntity object that contains the status of the request.
+     */
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteDangKyHoc(@PathVariable("id") int id) {
+        return dangKyHocService.deleteDangKyHoc(id);
+    }
 }

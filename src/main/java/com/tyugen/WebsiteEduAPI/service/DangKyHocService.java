@@ -92,4 +92,20 @@ public class DangKyHocService {
             return ResponseEntity.notFound().build();
         }
     }
+
+    /**
+     * This method is used to delete an existing DangKyHoc object in the database.
+     *
+     * @param id is the ID of the DangKyHoc object that needs to be deleted.
+     * @return a ResponseEntity object that contains the status of the request.
+     */
+    public ResponseEntity<?> deleteDangKyHoc(int id) {
+        Optional<DangKyHoc> dangKyHoc = dangKyHocRepository.findById(id);
+        if (dangKyHoc.isPresent()) {
+            dangKyHocRepository.deleteById(id);
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }
