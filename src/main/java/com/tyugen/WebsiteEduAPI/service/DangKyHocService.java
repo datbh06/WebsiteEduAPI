@@ -10,6 +10,9 @@ import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 import jakarta.validation.ValidatorFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -117,5 +120,17 @@ public class DangKyHocService {
     public ResponseEntity<?> getAllDangKyHoc() {
         Optional<List<DangKyHoc>> optionalDangKyHocList = Optional.of(dangKyHocRepository.findAll());
         return optionalDangKyHocList.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    /**
+     * Retrieve a page of dang ky hoc objects
+     *
+     * @param page the page number
+     * @param size the number of objects per page
+     * @return a Page object that contains the DangKyHoc objects.
+     */
+    public Page<DangKyHoc> getDangKyHocByPage(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return dangKyHocRepository.findAll(pageable);
     }
 }

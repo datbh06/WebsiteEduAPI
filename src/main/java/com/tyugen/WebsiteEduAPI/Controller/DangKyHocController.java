@@ -1,6 +1,9 @@
 package com.tyugen.WebsiteEduAPI.Controller;
 
+import com.tyugen.WebsiteEduAPI.model.DangKyHoc;
+import com.tyugen.WebsiteEduAPI.model.KhoaHoc;
 import com.tyugen.WebsiteEduAPI.service.DangKyHocService;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -56,5 +59,19 @@ public class DangKyHocController {
     @GetMapping("/list")
     public ResponseEntity<?> getAllDangKyHoc() {
         return dangKyHocService.getAllDangKyHoc();
+    }
+
+    /**
+     * Retrieve a page of dang ky hoc objects
+     *
+     * @param page the page number
+     * @param size the number of objects per page
+     * @return a Page object that contains the DangKyHoc objects.
+     */
+    @GetMapping("/page")
+    public Page<DangKyHoc> getDangKyHocHocByPage(
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = "5") int size) {
+        return dangKyHocService.getDangKyHocByPage(page, size);
     }
 }
