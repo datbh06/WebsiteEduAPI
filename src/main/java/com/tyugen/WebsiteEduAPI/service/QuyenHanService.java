@@ -7,6 +7,9 @@ import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 import jakarta.validation.ValidatorFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -114,5 +117,15 @@ public class QuyenHanService {
     public ResponseEntity<?> getAllQuyenHan() {
         Optional<List<QuyenHan>> quyenHan = Optional.of(quyenHanRepository.findAll());
         return quyenHan.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    /**
+     * Retrieves a page of QuyenHan objects from the database (Pagination)
+     *
+     * @param pageable the Pageable object containing the page number and page size
+     * @return a Page containing a list of QuyenHan objects
+     */
+    public Page<QuyenHan> getPageQuyenHan(Pageable pageable) {
+        return quyenHanRepository.findAll(pageable);
     }
 }

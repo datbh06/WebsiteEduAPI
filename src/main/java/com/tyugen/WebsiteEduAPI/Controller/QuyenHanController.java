@@ -1,6 +1,11 @@
 package com.tyugen.WebsiteEduAPI.Controller;
 
+import com.tyugen.WebsiteEduAPI.model.QuyenHan;
 import com.tyugen.WebsiteEduAPI.service.QuyenHanService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -64,6 +69,20 @@ public class QuyenHanController {
     @GetMapping("/list")
     public ResponseEntity<?> getAllQuyenHan() {
         return quyenHanService.getAllQuyenHan();
+    }
+
+    /**
+     * Retrieves a page of QuyenHan objects from the database (Pagination)
+     *
+     * @param page   the page number to be returned (default: 0)
+     * @param size   the number of items to be returned per page (default: 5)
+     * @return a Page containing a list of QuyenHan objects
+     */
+    @GetMapping("/list/page")
+    public Page<QuyenHan> getAllQuyenHanPage(@RequestParam(defaultValue = "0") int page,
+                                             @RequestParam(defaultValue = "5") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return quyenHanService.getPageQuyenHan(pageable);
     }
 
 }
