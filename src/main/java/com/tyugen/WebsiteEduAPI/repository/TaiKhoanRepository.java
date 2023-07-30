@@ -1,6 +1,8 @@
 package com.tyugen.WebsiteEduAPI.repository;
 
 import com.tyugen.WebsiteEduAPI.model.TaiKhoan;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -22,4 +24,13 @@ public interface TaiKhoanRepository extends JpaRepository<TaiKhoan, Integer> {
      * @return the TaiKhoan object with the specified account name
      */
     TaiKhoan findByTaiKhoan(String taiKhoan);
+
+    /**
+     * Finds a page of TaiKhoan object with the specified account name in the database.
+     *
+     * @param tenTaiKhoan the account name to be found
+     * @param pageable    the page information
+     * @return a page of TaiKhoan object with the specified account name
+     */
+    Page<TaiKhoan> findByTaiKhoanContaining(String tenTaiKhoan, Pageable pageable);
 }

@@ -164,4 +164,15 @@ public class TaiKhoanService {
     public Page<TaiKhoan> getOnPage(Pageable pageable) {
         return taiKhoanRepository.findAll(pageable);
     }
+
+    /**
+     * Retrieves a page of TaiKhoan objects from the database by specified tenTaiKhoan
+     *
+     * @param tenTaiKhoan the tenTaiKhoan of the TaiKhoan object to be retrieved
+     * @return a ResponseEntity containing the retrieved TaiKhoan object
+     */
+    public Page<TaiKhoan> getByTaiKhoanOnPage(String tenTaiKhoan, Pageable pageable) {
+        return taiKhoanRepository.findByTaiKhoanContaining(tenTaiKhoan, pageable);
+    }
+
 }

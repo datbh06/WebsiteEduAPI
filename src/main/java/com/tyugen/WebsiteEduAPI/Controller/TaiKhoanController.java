@@ -88,5 +88,20 @@ public class TaiKhoanController {
         return taiKhoanService.getOnPage(pageable);
     }
 
+    /**
+     * Retrieves a page of TaiKhoan objects from the database by specified tenTaiKhoan (Pagination)
+     *
+     * @param page        the page number (default: 0)
+     * @param size        the number of TaiKhoan objects per page (default: 5)
+     * @param tenTaiKhoan the tenTaiKhoan of the TaiKhoan object to be retrieved
+     * @return a Page containing a list of TaiKhoan objects
+     */
+    @GetMapping("page/find")
+    public Page<TaiKhoan> getOnPageByTaiKhoan(@RequestParam(defaultValue = "0") int page,
+                                              @RequestParam(defaultValue = "5") int size,
+                                              @RequestParam("taiKhoan") String tenTaiKhoan) {
+        Pageable pageable = PageRequest.of(page, size);
+        return taiKhoanService.getByTaiKhoanOnPage(tenTaiKhoan, pageable);
+    }
 
 }
