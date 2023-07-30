@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -54,4 +55,38 @@ public class LoaiBaiVietService {
             return ResponseEntity.ok().build();
         }
     }
+
+    /**
+     * Updates a LoaiBaiViet object with the specified ID.
+     *
+     * @param id          the ID of the LoaiBaiViet object to be updated
+     * @param loaiBaiViet a JSON representation of the LoaiBaiViet object with updated fields
+     * @return a ResponseEntity indicating the result of the update operation
+     */
+    public ResponseEntity<?> updateLoaiBaiViet(int id, String loaiBaiViet) {
+        Gson gson = new Gson();
+        LoaiBaiViet loaiBaiVietNew = gson.fromJson(loaiBaiViet, LoaiBaiViet.class);
+        Optional<LoaiBaiViet> loaiBaiVietOld = loaiBaiVietRepository.findById(id);
+        if (loaiBaiVietOld.isPresent()) {
+            Validator validator;
+            try (ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory()) {
+                validator = validatorFactory.getValidator();
+            }
+            Set<ConstraintViolation<LoaiBaiViet>> violations = validator.validate(loaiBaiVietNew);
+            if (!violations.isEmpty()) {
+                List<String> errorMessages = violations.stream()
+                        .map(ConstraintViolation::getMessage)
+                        .collect(Collectors.toList());
+                return ResponseEntity.badRequest().body(errorMessages);
+            } else {
+
+                loaiBaiVietNew.setLoaiBaiVietID(id);
+                loaiBaiVietRepository.save(loaiBaiVietNew);
+                return ResponseEntity.ok().build();
+            }
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }
+

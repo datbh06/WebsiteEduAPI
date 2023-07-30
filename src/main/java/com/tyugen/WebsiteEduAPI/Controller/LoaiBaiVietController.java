@@ -2,10 +2,7 @@ package com.tyugen.WebsiteEduAPI.Controller;
 
 import com.tyugen.WebsiteEduAPI.service.LoaiBaiVietService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * LoaiBaiVietController is a controller class that handles requests related to LoaiBaiViet objects.
@@ -33,6 +30,18 @@ public class LoaiBaiVietController {
     @PostMapping("/add")
     public ResponseEntity<?> addLoaiBaiViet(@RequestBody String loaiBaiViet) {
         return loaiBaiVietService.addLoaiBaiViet(loaiBaiViet);
+    }
+
+    /**
+     * Updates a LoaiBaiViet object with the specified ID.
+     *
+     * @param id          the ID of the LoaiBaiViet object to be updated
+     * @param loaiBaiViet a JSON representation of the updated LoaiBaiViet object
+     * @return a ResponseEntity indicating the result of the update operation
+     */
+    @PutMapping("/update/{id}")
+    public ResponseEntity<?> updateLoaiBaiViet(@PathVariable("id") int id, @RequestBody String loaiBaiViet) {
+        return loaiBaiVietService.updateLoaiBaiViet(id, loaiBaiViet);
     }
 
 }
