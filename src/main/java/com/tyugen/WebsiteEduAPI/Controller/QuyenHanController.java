@@ -55,4 +55,15 @@ public class QuyenHanController {
     public ResponseEntity<?> deleteQuyenHan(@PathVariable("id") int id) {
         return quyenHanService.deleteQuyenHan(id);
     }
+
+    /**
+     * Retrieve a list of QuyenHan objects.
+     *
+     * @return a list of QuyenHan objects
+     */
+    @GetMapping("/list")
+    public ResponseEntity<?> getAllQuyenHan() {
+        return quyenHanService.getAllQuyenHan();
+    }
+
 }

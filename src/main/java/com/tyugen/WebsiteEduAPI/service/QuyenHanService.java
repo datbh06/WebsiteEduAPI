@@ -105,4 +105,14 @@ public class QuyenHanService {
             return ResponseEntity.notFound().build();
         }
     }
+
+    /**
+     * Retrieve a list of all quyen han in the database
+     *
+     * @return a ResponseEntity containing a list of all quyen han in the database
+     */
+    public ResponseEntity<?> getAllQuyenHan() {
+        Optional<List<QuyenHan>> quyenHan = Optional.of(quyenHanRepository.findAll());
+        return quyenHan.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
 }
