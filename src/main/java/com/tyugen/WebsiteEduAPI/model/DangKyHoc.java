@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import java.sql.Date;
 import java.util.Calendar;
+import java.util.Optional;
 
 /**
  * Represents a DangKyHoc entity.
@@ -57,23 +58,32 @@ public class DangKyHoc {
     @PrePersist
     public void prePersist() {
         if (khoaHoc == null || hocVien == null || tinhTrangHoc == null || taiKhoan == null) {
-            throw new IllegalStateException("Related entities must already exist");
+            throw new IllegalStateException("Related entities must exist");
         }
         ngayDangKy = new Date(System.currentTimeMillis());
+        updateNgayBatDauAndNgayKetThuc();
     }
 
     /**
-     * Updates the ngayBatDau and ngayKetThuc fields based on the tinhTrangHoc and khoaHoc fields.
+     * Updates the ngayBatDau and ngayKetThuc fields when the entity is updated.
      */
     @PreUpdate
     public void preUpdate() {
-        if (tinhTrangHoc != null && "Đang học".equals(tinhTrangHoc.getTenTinhTrang())) {
+        updateNgayBatDauAndNgayKetThuc();
+    }
+
+    /**
+     * Updates the ngayBatDau and ngayKetThuc fields based on the tinhTrangHoc field.
+     */
+    private void updateNgayBatDauAndNgayKetThuc() {
+        if (tinhTrangHoc != null && tinhTrangHoc.getTinhTrangHocID() == 2) {
             ngayBatDau = new Date(System.currentTimeMillis());
-            if (khoaHoc != null && khoaHoc.getThoiGianHoc() != null) {
+            if (khoaHoc != null) {
+                int thoiGianHoc = khoaHoc.getThoiGianHoc();
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTime(ngayBatDau);
-                calendar.add(Calendar.DATE, khoaHoc.getThoiGianHoc());
-                ngayKetThuc = new java.sql.Date(calendar.getTimeInMillis());
+                calendar.add(Calendar.MONTH, thoiGianHoc);
+                ngayKetThuc = new Date(calendar.getTimeInMillis());
             }
         }
     }
