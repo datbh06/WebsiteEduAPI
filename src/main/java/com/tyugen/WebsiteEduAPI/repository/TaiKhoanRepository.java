@@ -14,4 +14,12 @@ public interface TaiKhoanRepository extends JpaRepository<TaiKhoan, Integer> {
      * @return true if the account name exists, false otherwise
      */
     boolean existsByTaiKhoan(String taiKhoan);
+
+    /**
+     * Finds a TaiKhoan object with the specified account name in the database.
+     *
+     * @param taiKhoan the account name to be found
+     * @return the TaiKhoan object with the specified account name
+     */
+    TaiKhoan findByTaiKhoan(String taiKhoan);
 }
