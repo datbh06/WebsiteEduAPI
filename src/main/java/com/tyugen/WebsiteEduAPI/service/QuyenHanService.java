@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -55,5 +56,53 @@ public class QuyenHanService {
             return ResponseEntity.ok().build();
         }
 
+    }
+
+    /**
+     * Updates a QuyenHan object with the specified ID.
+     *
+     * @param id       the ID of the QuyenHan object to be updated
+     * @param quyenHan a JSON representation of the new QuyenHan object
+     * @return a ResponseEntity indicating the result of the update operation
+     */
+    public ResponseEntity<?> updateQuyenHan(int id, String quyenHan) {
+        Gson gson = new Gson();
+        QuyenHan quyenHanNew = gson.fromJson(quyenHan, QuyenHan.class);
+        Optional<QuyenHan> quyenHanOld = quyenHanRepository.findById(id);
+        if (quyenHanOld.isPresent()) {
+            Validator validator;
+            try (ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory()) {
+                validator = validatorFactory.getValidator();
+            }
+            Set<ConstraintViolation<QuyenHan>> violations = validator.validate(quyenHanNew);
+            if (!violations.isEmpty()) {
+                List<String> errorMessages = violations.stream()
+                        .map(ConstraintViolation::getMessage)
+                        .collect(Collectors.toList());
+                return ResponseEntity.badRequest().body(errorMessages);
+            } else {
+                quyenHanNew.setQuyenHanID(id);
+                quyenHanRepository.save(quyenHanNew);
+                return ResponseEntity.ok().build();
+            }
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    /**
+     * Deletes a QuyenHan object with the specified ID.
+     *
+     * @param id the ID of the QuyenHan object to be deleted
+     * @return a ResponseEntity indicating the result of the delete operation
+     */
+    public ResponseEntity<?> deleteQuyenHan(int id) {
+        Optional<QuyenHan> quyenHan = quyenHanRepository.findById(id);
+        if (quyenHan.isPresent()) {
+            quyenHanRepository.deleteById(id);
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }
