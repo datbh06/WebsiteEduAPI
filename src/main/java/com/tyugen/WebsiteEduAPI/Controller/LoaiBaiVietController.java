@@ -44,4 +44,15 @@ public class LoaiBaiVietController {
         return loaiBaiVietService.updateLoaiBaiViet(id, loaiBaiViet);
     }
 
+    /**
+     * Deletes a LoaiBaiViet object with the specified ID.
+     *
+     * @param id the ID of the LoaiBaiViet object to be deleted
+     * @return a ResponseEntity indicating the result of the delete operation
+     */
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteLoaiBaiViet(@PathVariable("id") int id) {
+        return loaiBaiVietService.deleteLoaiBaiViet(id);
+    }
+
 }

@@ -88,5 +88,21 @@ public class LoaiBaiVietService {
             return ResponseEntity.notFound().build();
         }
     }
+
+    /**
+     * Deletes a LoaiBaiViet object with the specified ID.
+     *
+     * @param id the ID of the LoaiBaiViet object to be deleted
+     * @return a ResponseEntity indicating the result of the delete operation
+     */
+    public ResponseEntity<?> deleteLoaiBaiViet(int id) {
+        Optional<LoaiBaiViet> loaiBaiViet = loaiBaiVietRepository.findById(id);
+        if (loaiBaiViet.isPresent()) {
+            loaiBaiVietRepository.deleteById(id);
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }
 
