@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * LoaiBaiVietController is a controller class that handles requests related to LoaiBaiViet objects.
+ */
 @RestController
 @RequestMapping("api/v1/loaibaiviet")
 public class LoaiBaiVietController {
@@ -21,8 +24,15 @@ public class LoaiBaiVietController {
         this.loaiBaiVietService = loaiBaiVietService;
     }
 
+    /**
+     * Adds a new LoaiBaiViet object to the database.
+     *
+     * @param loaiBaiViet a JSON representation of the new LoaiBaiViet object
+     * @return a ResponseEntity indicating the result of the add operation
+     */
     @PostMapping("/add")
     public ResponseEntity<?> addLoaiBaiViet(@RequestBody String loaiBaiViet) {
         return loaiBaiVietService.addLoaiBaiViet(loaiBaiViet);
     }
+
 }
