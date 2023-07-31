@@ -7,6 +7,8 @@ import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 import jakarta.validation.ValidatorFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -108,5 +110,15 @@ public class ChuDeService {
     public ResponseEntity<?> getAllChuDe() {
         Optional<List<ChuDe>> chuDes = Optional.of(chuDeRepository.findAll());
         return chuDes.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    /**
+     * Get a page of ChuDe object from the database.
+     *
+     * @param pageable the page information
+     * @return a Page of ChuDe objects
+     */
+    public Page<ChuDe> getAllOnPage(Pageable pageable) {
+        return chuDeRepository.findAll(pageable);
     }
 }

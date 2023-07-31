@@ -1,6 +1,10 @@
 package com.tyugen.WebsiteEduAPI.Controller;
 
+import com.tyugen.WebsiteEduAPI.model.ChuDe;
 import com.tyugen.WebsiteEduAPI.service.ChuDeService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -63,5 +67,18 @@ public class ChuDeController {
     @GetMapping("/list")
     public ResponseEntity<?> getAllChuDe() {
         return chuDeService.getAllChuDe();
+    }
+
+    /**
+     * Get a page of ChuDe objects from the database.
+     *
+     * @param page the page number (default: 0)
+     * @param size the number of ChuDe objects per page (default: 5)
+     * @return a Page of ChuDe objects
+     */
+    @GetMapping("/list/page")
+    public Page<ChuDe> getAllChuDePage(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return chuDeService.getAllOnPage(pageable);
     }
 }
