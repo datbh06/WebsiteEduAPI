@@ -2,10 +2,7 @@ package com.tyugen.WebsiteEduAPI.Controller;
 
 import com.tyugen.WebsiteEduAPI.service.BaiVietService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * BaiVietController is a controller class that handles requests related to BaiViet objects.
@@ -35,5 +32,16 @@ public class BaiVietController {
         return baiVietService.addBaiViet(baiViet);
     }
 
+    /**
+     * Updates an existing BaiViet object in the database.
+     *
+     * @param id      the ID of the BaiViet object to be updated
+     * @param baiViet a JSON representation of the updated BaiViet object
+     * @return a ResponseEntity indicating the result of the update operation
+     */
+    @PutMapping("/update/{id}")
+    public ResponseEntity<?> updateBaiViet(@PathVariable("id") int id, @RequestBody String baiViet) {
+        return baiVietService.updateBaiViet(id, baiViet);
+    }
 
 }

@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -54,4 +55,33 @@ public class BaiVietService {
         }
     }
 
+    /**
+     * Updates an existing BaiViet object in the database.
+     *
+     * @param id      the ID of the BaiViet object to be updated
+     * @param baiViet a JSON representation of the updated BaiViet object
+     * @return a ResponseEntity indicating the result of the update operation
+     */
+    public ResponseEntity<?> updateBaiViet(int id, String baiViet) {
+        Gson gson = new Gson();
+        BaiViet newBaiViet = gson.fromJson(baiViet, BaiViet.class);
+        Optional<BaiViet> oldBaiViet = baiVietRepository.findById(id);
+        if (oldBaiViet.isEmpty()) {
+            return ResponseEntity.badRequest().body("BaiViet not found");
+        } else {
+            Validator validator;
+            try (ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory()) {
+                validator = validatorFactory.getValidator();
+            }
+            Set<ConstraintViolation<BaiViet>> violations = validator.validate(newBaiViet);
+            if (!violations.isEmpty()) {
+                List<String> errorMessages = violations.stream().map(ConstraintViolation::getMessage).collect(Collectors.toList());
+                return ResponseEntity.badRequest().body(errorMessages);
+            } else {
+                newBaiViet.setBaiVietID(id);
+                baiVietRepository.save(newBaiViet);
+                return ResponseEntity.ok().build();
+            }
+        }
+    }
 }
