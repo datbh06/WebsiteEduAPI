@@ -54,4 +54,14 @@ public class BaiVietController {
     public ResponseEntity<?> deleteBaiViet(@PathVariable("id") int id) {
         return baiVietService.deleteBaiViet(id);
     }
+
+    /**
+     * Retrieves a list of BaiViet objects from the database.
+     *
+     * @return a ResponseEntity containing a list of BaiViet objects
+     */
+    @GetMapping("/list")
+    public ResponseEntity<?> getBaiVietList() {
+        return baiVietService.getAllBaiViet();
+    }
 }

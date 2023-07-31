@@ -100,4 +100,16 @@ public class BaiVietService {
             return ResponseEntity.ok().build();
         }
     }
+
+    /**
+     * Gets a list of BaiViet objects from the database.
+     *
+     * @return a ResponseEntity containing a list of BaiViet objects
+     */
+    public ResponseEntity<?> getAllBaiViet() {
+        Optional<List<BaiViet>> baiVietList = Optional.of(baiVietRepository.findAll());
+        return baiVietList.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+
 }
