@@ -91,4 +91,20 @@ public class BaiVietController {
         Pageable pageable = PageRequest.of(page, size);
         return baiVietService.getBaiVietByPage(pageable);
     }
+
+    /**
+     * Retrieves a page of BaiViet object from the database by its keyword of tenBaiViet
+     *
+     * @param page    the page number
+     * @param size    the number of BaiViet objects per page
+     * @param keyword the keyword of tenBaiViet
+     * @return a ResponseEntity containing a BaiViet object
+     */
+    @GetMapping("/page/find")
+    public Page<BaiViet> getBaiVietListPageByKeyword(@RequestParam(defaultValue = "0") int page,
+                                                     @RequestParam(defaultValue = "5") int size,
+                                                     @RequestParam String keyword) {
+        Pageable pageable = PageRequest.of(page, size);
+        return baiVietService.getBaiVietByPageAndTenBaiViet(pageable, keyword);
+    }
 }

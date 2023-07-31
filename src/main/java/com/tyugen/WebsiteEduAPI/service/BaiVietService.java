@@ -134,5 +134,14 @@ public class BaiVietService {
         return baiVietRepository.findAll(pageable);
     }
 
-
+    /**
+     * Gets a page of BaiViet object from the database by its keyword of tenBaiViet
+     *
+     * @param pageable the page number and size
+     * @param keyword  the tenBaiViet of the BaiViet object to be found
+     * @return a Page of BaiViet objects
+     */
+    public Page<BaiViet> getBaiVietByPageAndTenBaiViet(Pageable pageable, String keyword) {
+        return baiVietRepository.findByTenBaiVietContaining(pageable, keyword);
+    }
 }
