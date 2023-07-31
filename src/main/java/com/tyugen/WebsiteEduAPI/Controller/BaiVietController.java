@@ -64,4 +64,15 @@ public class BaiVietController {
     public ResponseEntity<?> getBaiVietList() {
         return baiVietService.getAllBaiViet();
     }
+
+    /**
+     * Retrieves a BaiViet object from the database by its tenBaiViet
+     *
+     * @return a ResponseEntity containing a BaiViet object
+     */
+    @GetMapping("/find/tenbaiviet")
+    public ResponseEntity<?> getBaiVietByTenBaiViet(@RequestParam String tenBaiViet) {
+        return baiVietService.getBaiVietByTenBaiViet(tenBaiViet);
+    }
+
 }

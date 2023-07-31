@@ -111,5 +111,14 @@ public class BaiVietService {
         return baiVietList.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-
+    /**
+     * Gets a BaiViet object from the database by its tenBaiViet
+     *
+     * @param tenBaiViet the tenBaiViet of the BaiViet object to be found
+     * @return a ResponseEntity containing a BaiViet object
+     */
+    public ResponseEntity<?> getBaiVietByTenBaiViet(String tenBaiViet) {
+        Optional<BaiViet> baiViet = Optional.of(baiVietRepository.findByTenBaiViet(tenBaiViet));
+        return baiViet.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
 }
