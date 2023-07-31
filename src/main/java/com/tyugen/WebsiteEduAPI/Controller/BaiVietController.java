@@ -1,6 +1,10 @@
 package com.tyugen.WebsiteEduAPI.Controller;
 
+import com.tyugen.WebsiteEduAPI.model.BaiViet;
 import com.tyugen.WebsiteEduAPI.service.BaiVietService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -75,4 +79,16 @@ public class BaiVietController {
         return baiVietService.getBaiVietByTenBaiViet(tenBaiViet);
     }
 
+    /**
+     * Retrieves a page of BaiViet object from the database
+     *
+     * @param page the page number
+     * @param size the number of BaiViet objects per page
+     * @return a ResponseEntity containing a BaiViet object
+     */
+    @GetMapping("list/page")
+    public Page<BaiViet> getBaiVietListPage(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "5") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return baiVietService.getBaiVietByPage(pageable);
+    }
 }

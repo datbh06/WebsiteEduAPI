@@ -7,6 +7,8 @@ import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 import jakarta.validation.ValidatorFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -121,4 +123,16 @@ public class BaiVietService {
         Optional<BaiViet> baiViet = Optional.of(baiVietRepository.findByTenBaiViet(tenBaiViet));
         return baiViet.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
+
+    /**
+     * Gets a page of BaiViet object from the database
+     *
+     * @param pageable the page number and size
+     * @return a Page of BaiViet objects
+     */
+    public Page<BaiViet> getBaiVietByPage(Pageable pageable) {
+        return baiVietRepository.findAll(pageable);
+    }
+
+
 }
