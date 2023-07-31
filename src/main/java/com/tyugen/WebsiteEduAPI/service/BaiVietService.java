@@ -84,4 +84,20 @@ public class BaiVietService {
             }
         }
     }
+
+    /**
+     * Deletes an existing BaiViet object in the database.
+     *
+     * @param id the ID of the BaiViet object to be deleted
+     * @return a ResponseEntity indicating the result of the delete operation
+     */
+    public ResponseEntity<?> deleteBaiViet(int id) {
+        Optional<BaiViet> oldBaiViet = baiVietRepository.findById(id);
+        if (oldBaiViet.isEmpty()) {
+            return ResponseEntity.badRequest().body("BaiViet not found");
+        } else {
+            baiVietRepository.deleteById(id);
+            return ResponseEntity.ok().build();
+        }
+    }
 }

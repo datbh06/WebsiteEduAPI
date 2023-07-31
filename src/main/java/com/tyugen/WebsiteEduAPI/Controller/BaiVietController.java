@@ -44,4 +44,14 @@ public class BaiVietController {
         return baiVietService.updateBaiViet(id, baiViet);
     }
 
+    /**
+     * Deletes an existing BaiViet object from the database.
+     *
+     * @param id the ID of the BaiViet object to be deleted
+     * @return a ResponseEntity indicating the result of the delete operation
+     */
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteBaiViet(@PathVariable("id") int id) {
+        return baiVietService.deleteBaiViet(id);
+    }
 }
