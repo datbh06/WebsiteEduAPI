@@ -99,4 +99,14 @@ public class ChuDeService {
             return ResponseEntity.notFound().build();
         }
     }
+
+    /**
+     * Get all ChuDe objects from the database.
+     *
+     * @return a ResponseEntity containing a List of ChuDe objects
+     */
+    public ResponseEntity<?> getAllChuDe() {
+        Optional<List<ChuDe>> chuDes = Optional.of(chuDeRepository.findAll());
+        return chuDes.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
 }

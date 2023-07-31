@@ -54,4 +54,14 @@ public class ChuDeController {
     public ResponseEntity<?> deleteChuDe(@PathVariable int id) {
         return chuDeService.deleteChuDe(id);
     }
+
+    /**
+     * Get all ChuDe objects from the database.
+     *
+     * @return a ResponseEntity containing a List of all ChuDe objects
+     */
+    @GetMapping("/list")
+    public ResponseEntity<?> getAllChuDe() {
+        return chuDeService.getAllChuDe();
+    }
 }
