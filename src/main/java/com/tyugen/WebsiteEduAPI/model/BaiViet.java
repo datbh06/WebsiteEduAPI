@@ -47,4 +47,13 @@ public class BaiViet {
     @JoinColumn(name = "taiKhoanID", foreignKey = @ForeignKey(name = "fk_baiviet_taikhoan"))
     private TaiKhoan taiKhoan;
 
+    /**
+     * Auto update thoiGianTao before inserting or updating
+     */
+    @PrePersist
+    @PreUpdate
+    public void prePersist() {
+        thoiGianTao = new Date(System.currentTimeMillis());
+    }
+
 }
