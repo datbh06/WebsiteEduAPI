@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -45,9 +46,7 @@ public class ChuDeService {
         }
         Set<ConstraintViolation<ChuDe>> violations = validator.validate(newChuDe);
         if (!violations.isEmpty()) {
-            List<String> errorMessages = violations.stream()
-                    .map(ConstraintViolation::getMessage)
-                    .collect(Collectors.toList());
+            List<String> errorMessages = violations.stream().map(ConstraintViolation::getMessage).collect(Collectors.toList());
             return ResponseEntity.badRequest().body(errorMessages);
         } else {
             chuDeRepository.save(newChuDe);
@@ -55,5 +54,33 @@ public class ChuDeService {
         }
     }
 
-
+    /**
+     * Update an existing ChuDe object in the database.
+     *
+     * @param id    the id of the ChuDe object to be updated
+     * @param chuDe a JSON representation of the updated ChuDe object
+     * @return a ResponseEntity indicating the result of the update operation
+     */
+    public ResponseEntity<?> updateChuDe(int id, String chuDe) {
+        Gson gson = new Gson();
+        ChuDe newChuDe = gson.fromJson(chuDe, ChuDe.class);
+        Optional<ChuDe> oldChuDe = chuDeRepository.findById(id);
+        if (oldChuDe.isPresent()) {
+            Validator validator;
+            try (ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory()) {
+                validator = validatorFactory.getValidator();
+            }
+            Set<ConstraintViolation<ChuDe>> violations = validator.validate(newChuDe);
+            if (!violations.isEmpty()) {
+                List<String> errorMessages = violations.stream().map(ConstraintViolation::getMessage).collect(Collectors.toList());
+                return ResponseEntity.badRequest().body(errorMessages);
+            } else {
+                newChuDe.setChuDeID(id);
+                chuDeRepository.save(newChuDe);
+                return ResponseEntity.ok().build();
+            }
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }
