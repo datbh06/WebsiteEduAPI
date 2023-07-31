@@ -7,6 +7,8 @@ import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 import jakarta.validation.ValidatorFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -113,6 +115,15 @@ public class LoaiBaiVietService {
     public ResponseEntity<?> getAllLoaiBaiViet() {
         Optional<List<LoaiBaiViet>> loaiBaiViet = Optional.of(loaiBaiVietRepository.findAll());
         return loaiBaiViet.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+    }
+
+    /**
+     * Retrieves a page of LoaiBaiViet objects.
+     * @param pageable the pagination information including page and size
+     * @return a Page containing a list of LoaiBaiViet objects
+     */
+    public Page<LoaiBaiViet> getAllLoaiBaiVietPage(Pageable pageable) {
+        return loaiBaiVietRepository.findAll(pageable);
     }
 }
 
