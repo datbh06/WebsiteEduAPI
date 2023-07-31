@@ -43,4 +43,15 @@ public class ChuDeController {
     public ResponseEntity<?> updateChuDe(@PathVariable int id, @RequestBody String chuDe) {
         return chuDeService.updateChuDe(id, chuDe);
     }
+
+    /**
+     * Delete an existing ChuDe object in the database.
+     *
+     * @param id the id of the ChuDe object to be deleted
+     * @return a ResponseEntity indicating the result of the delete operation
+     */
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteChuDe(@PathVariable int id) {
+        return chuDeService.deleteChuDe(id);
+    }
 }

@@ -83,4 +83,20 @@ public class ChuDeService {
             return ResponseEntity.notFound().build();
         }
     }
+
+    /**
+     * Delete an existing ChuDe object in the database.
+     *
+     * @param id the id of the ChuDe object to be deleted
+     * @return a ResponseEntity indicating the result of the delete operation
+     */
+    public ResponseEntity<?> deleteChuDe(int id) {
+        Optional<ChuDe> oldChuDe = chuDeRepository.findById(id);
+        if (oldChuDe.isPresent()) {
+            chuDeRepository.deleteById(id);
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }
