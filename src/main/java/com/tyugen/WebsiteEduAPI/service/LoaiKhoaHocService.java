@@ -1,6 +1,8 @@
 package com.tyugen.WebsiteEduAPI.service;
 
 import com.google.gson.Gson;
+import com.tyugen.WebsiteEduAPI.exceptions.ValidationUtils;
+import com.tyugen.WebsiteEduAPI.model.KhoaHoc;
 import com.tyugen.WebsiteEduAPI.model.LoaiKhoaHoc;
 import com.tyugen.WebsiteEduAPI.repository.LoaiKhoaHocRepository;
 import jakarta.validation.ConstraintViolation;
@@ -39,15 +41,9 @@ public class LoaiKhoaHocService {
     public ResponseEntity<?> addLoaiKhoaHoc(String loaiKhoaHoc) {
         Gson gson = new Gson();
         LoaiKhoaHoc loaiKhoaHocNew = gson.fromJson(loaiKhoaHoc, LoaiKhoaHoc.class);
-        Validator validator;
-        try (ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory()) {
-            validator = validatorFactory.getValidator();
-        }
-        Set<ConstraintViolation<LoaiKhoaHoc>> violations = validator.validate(loaiKhoaHocNew);
-        if (!violations.isEmpty()) {
-            List<String> errorMessages = violations.stream()
-                    .map(ConstraintViolation::getMessage)
-                    .collect(Collectors.toList());
+
+        List<String> errorMessages = ValidationUtils.validate(loaiKhoaHocNew, LoaiKhoaHoc.class);
+        if (!errorMessages.isEmpty()) {
             return ResponseEntity.badRequest().body(errorMessages);
         } else {
             loaiKhoaHocRepository.save(loaiKhoaHocNew);
@@ -62,7 +58,7 @@ public class LoaiKhoaHocService {
      * @param loaiKhoaHoc a JSON representation of the updated LoaiKhoaHoc object
      * @return a ResponseEntity indicating the result of the update operation
      */
-    public ResponseEntity<?> updateLoaiKhoaHoc(Integer id,String loaiKhoaHoc) {
+    public ResponseEntity<?> updateLoaiKhoaHoc(Integer id, String loaiKhoaHoc) {
         Gson gson = new Gson();
         LoaiKhoaHoc loaiKhoaHocNew = gson.fromJson(loaiKhoaHoc, LoaiKhoaHoc.class);
         Optional<LoaiKhoaHoc> loaiKhoaHocOld = loaiKhoaHocRepository.findById(id);

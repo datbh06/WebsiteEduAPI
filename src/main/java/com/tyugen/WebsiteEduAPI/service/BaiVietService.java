@@ -1,7 +1,9 @@
 package com.tyugen.WebsiteEduAPI.service;
 
 import com.google.gson.Gson;
+import com.tyugen.WebsiteEduAPI.exceptions.ValidationUtils;
 import com.tyugen.WebsiteEduAPI.model.BaiViet;
+import com.tyugen.WebsiteEduAPI.model.KhoaHoc;
 import com.tyugen.WebsiteEduAPI.repository.BaiVietRepository;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
@@ -43,13 +45,9 @@ public class BaiVietService {
     public ResponseEntity<?> addBaiViet(String baiViet) {
         Gson gson = new Gson();
         BaiViet newBaiViet = gson.fromJson(baiViet, BaiViet.class);
-        Validator validator;
-        try (ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory()) {
-            validator = validatorFactory.getValidator();
-        }
-        Set<ConstraintViolation<BaiViet>> violations = validator.validate(newBaiViet);
-        if (!violations.isEmpty()) {
-            List<String> errorMessages = violations.stream().map(ConstraintViolation::getMessage).collect(Collectors.toList());
+
+        List<String> errorMessages = ValidationUtils.validate(newBaiViet, BaiViet.class);
+        if (!errorMessages.isEmpty()) {
             return ResponseEntity.badRequest().body(errorMessages);
         } else {
             baiVietRepository.save(newBaiViet);

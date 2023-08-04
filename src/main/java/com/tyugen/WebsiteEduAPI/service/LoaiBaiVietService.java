@@ -1,6 +1,8 @@
 package com.tyugen.WebsiteEduAPI.service;
 
 import com.google.gson.Gson;
+import com.tyugen.WebsiteEduAPI.exceptions.ValidationUtils;
+import com.tyugen.WebsiteEduAPI.model.KhoaHoc;
 import com.tyugen.WebsiteEduAPI.model.LoaiBaiViet;
 import com.tyugen.WebsiteEduAPI.repository.LoaiBaiVietRepository;
 import jakarta.validation.ConstraintViolation;
@@ -42,15 +44,9 @@ public class LoaiBaiVietService {
     public ResponseEntity<?> addLoaiBaiViet(String loaiBaiViet) {
         Gson gson = new Gson();
         LoaiBaiViet loaiBaiVietNew = gson.fromJson(loaiBaiViet, LoaiBaiViet.class);
-        Validator validator;
-        try (ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory()) {
-            validator = validatorFactory.getValidator();
-        }
-        Set<ConstraintViolation<LoaiBaiViet>> violations = validator.validate(loaiBaiVietNew);
-        if (!violations.isEmpty()) {
-            List<String> errorMessages = violations.stream()
-                    .map(ConstraintViolation::getMessage)
-                    .collect(Collectors.toList());
+
+        List<String> errorMessages = ValidationUtils.validate(loaiBaiVietNew, LoaiBaiViet.class);
+        if (!errorMessages.isEmpty()) {
             return ResponseEntity.badRequest().body(errorMessages);
         } else {
             loaiBaiVietRepository.save(loaiBaiVietNew);
@@ -119,6 +115,7 @@ public class LoaiBaiVietService {
 
     /**
      * Retrieves a page of LoaiBaiViet objects.
+     *
      * @param pageable the pagination information including page and size
      * @return a Page containing a list of LoaiBaiViet objects
      */

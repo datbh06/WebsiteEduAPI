@@ -3,6 +3,7 @@ package com.tyugen.WebsiteEduAPI.service;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.tyugen.WebsiteEduAPI.Adapter.DateTypeAdapter;
+import com.tyugen.WebsiteEduAPI.exceptions.ValidationUtils;
 import com.tyugen.WebsiteEduAPI.model.HocVien;
 import com.tyugen.WebsiteEduAPI.repository.HocVienRepository;
 import jakarta.validation.ConstraintViolation;
@@ -54,23 +55,16 @@ public class HocVienService {
             // Return a badRequest response with an error message
             return ResponseEntity.badRequest().body("A HocVien object with the same soDienThoai value already exists");
         }
-        Validator validator;
-        try (ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory()) {
-            validator = validatorFactory.getValidator();
-        }
 
-        Set<ConstraintViolation<HocVien>> violations = validator.validate(hocVien);
-
-        if (!violations.isEmpty()) {
-            List<String> errorMessages = violations.stream()
-                    .map(ConstraintViolation::getMessage)
-                    .collect(Collectors.toList());
+        List<String> errorMessages = ValidationUtils.validate(hocVien, HocVien.class);
+        if (!errorMessages.isEmpty()) {
             return ResponseEntity.badRequest().body(errorMessages);
         } else {
             hocVienRepository.save(hocVien);
             return ResponseEntity.ok().build();
         }
     }
+
 
     /**
      * Updates an existing HocVien object in the database.

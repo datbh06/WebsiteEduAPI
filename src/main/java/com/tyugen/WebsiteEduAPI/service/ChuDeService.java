@@ -1,7 +1,9 @@
 package com.tyugen.WebsiteEduAPI.service;
 
 import com.google.gson.Gson;
+import com.tyugen.WebsiteEduAPI.exceptions.ValidationUtils;
 import com.tyugen.WebsiteEduAPI.model.ChuDe;
+import com.tyugen.WebsiteEduAPI.model.KhoaHoc;
 import com.tyugen.WebsiteEduAPI.repository.ChuDeRepository;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
@@ -42,13 +44,9 @@ public class ChuDeService {
     public ResponseEntity<?> addChuDe(String chuDe) {
         Gson gson = new Gson();
         ChuDe newChuDe = gson.fromJson(chuDe, ChuDe.class);
-        Validator validator;
-        try (ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory()) {
-            validator = validatorFactory.getValidator();
-        }
-        Set<ConstraintViolation<ChuDe>> violations = validator.validate(newChuDe);
-        if (!violations.isEmpty()) {
-            List<String> errorMessages = violations.stream().map(ConstraintViolation::getMessage).collect(Collectors.toList());
+
+        List<String> errorMessages = ValidationUtils.validate(newChuDe, ChuDe.class);
+        if (!errorMessages.isEmpty()) {
             return ResponseEntity.badRequest().body(errorMessages);
         } else {
             chuDeRepository.save(newChuDe);

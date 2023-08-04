@@ -1,6 +1,7 @@
 package com.tyugen.WebsiteEduAPI.service;
 
 import com.google.gson.Gson;
+import com.tyugen.WebsiteEduAPI.exceptions.ValidationUtils;
 import com.tyugen.WebsiteEduAPI.model.KhoaHoc;
 import com.tyugen.WebsiteEduAPI.model.TaiKhoan;
 import com.tyugen.WebsiteEduAPI.repository.TaiKhoanRepository;
@@ -51,20 +52,12 @@ public class TaiKhoanService {
             throw new RuntimeException("Password must contain numbers and special characters");
         }
 
-        Validator validator;
-        try (ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
-            validator = factory.getValidator();
-        }
-        Set<ConstraintViolation<TaiKhoan>> violations = validator.validate(newTaiKhoan);
-
-        if (violations.isEmpty()) {
+        List<String> errorMessages = ValidationUtils.validate(newTaiKhoan, TaiKhoan.class);
+        if (!errorMessages.isEmpty()) {
+            return ResponseEntity.badRequest().body(errorMessages);
+        } else {
             taiKhoanRepository.save(newTaiKhoan);
             return ResponseEntity.ok().build();
-        } else {
-            List<String> errorMessages = violations.stream()
-                    .map(ConstraintViolation::getMessage)
-                    .collect(Collectors.toList());
-            return ResponseEntity.badRequest().body(errorMessages);
         }
     }
 

@@ -1,6 +1,8 @@
 package com.tyugen.WebsiteEduAPI.service;
 
 import com.google.gson.Gson;
+import com.tyugen.WebsiteEduAPI.exceptions.ValidationUtils;
+import com.tyugen.WebsiteEduAPI.model.KhoaHoc;
 import com.tyugen.WebsiteEduAPI.model.TinhTrangHoc;
 import com.tyugen.WebsiteEduAPI.repository.TinhTrangHocRepository;
 import jakarta.validation.ConstraintViolation;
@@ -42,15 +44,8 @@ public class TinhTrangHocService {
         Gson gson = new Gson();
         TinhTrangHoc tinhTrangNew = gson.fromJson(tinhTrangHoc, TinhTrangHoc.class);
 
-        Validator validator;
-        try (ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory()) {
-            validator = validatorFactory.getValidator();
-        }
-        Set<ConstraintViolation<TinhTrangHoc>> violations = validator.validate(tinhTrangNew);
-        if (!violations.isEmpty()) {
-            List<String> errorMessages = violations.stream()
-                    .map(ConstraintViolation::getMessage)
-                    .collect(Collectors.toList());
+        List<String> errorMessages = ValidationUtils.validate(tinhTrangNew, TinhTrangHoc.class);
+        if (!errorMessages.isEmpty()) {
             return ResponseEntity.badRequest().body(errorMessages);
         } else {
             tinhTrangHocRepository.save(tinhTrangNew);

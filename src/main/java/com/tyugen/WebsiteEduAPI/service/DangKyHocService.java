@@ -3,6 +3,7 @@ package com.tyugen.WebsiteEduAPI.service;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.tyugen.WebsiteEduAPI.Adapter.DateTypeAdapter;
+import com.tyugen.WebsiteEduAPI.exceptions.ValidationUtils;
 import com.tyugen.WebsiteEduAPI.model.DangKyHoc;
 import com.tyugen.WebsiteEduAPI.model.KhoaHoc;
 import com.tyugen.WebsiteEduAPI.repository.DangKyHocRepository;
@@ -48,15 +49,8 @@ public class DangKyHocService {
         Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, new DateTypeAdapter()).create();
         DangKyHoc dangKyHocNew = gson.fromJson(dangKyHoc, DangKyHoc.class);
 
-        Validator validator;
-        try (ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory()) {
-            validator = validatorFactory.getValidator();
-        }
-        Set<ConstraintViolation<DangKyHoc>> violations = validator.validate(dangKyHocNew);
-        if (!violations.isEmpty()) {
-            List<String> errorMessages = violations.stream()
-                    .map(ConstraintViolation::getMessage)
-                    .collect(Collectors.toList());
+        List<String> errorMessages = ValidationUtils.validate(dangKyHocNew, DangKyHoc.class);
+        if (!errorMessages.isEmpty()) {
             return ResponseEntity.badRequest().body(errorMessages);
         } else {
             dangKyHocRepository.save(dangKyHocNew);
