@@ -2,7 +2,9 @@ package com.tyugen.WebsiteEduAPI.service;
 
 import com.google.gson.Gson;
 import com.tyugen.WebsiteEduAPI.exceptions.ResourceNotFoundException;
+import com.tyugen.WebsiteEduAPI.exceptions.ValidationUtils;
 import com.tyugen.WebsiteEduAPI.model.KhoaHoc;
+import com.tyugen.WebsiteEduAPI.model.LoaiKhoaHoc;
 import com.tyugen.WebsiteEduAPI.repository.KhoaHocRepository;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
@@ -42,20 +44,12 @@ public class KhoaHocService {
         Gson gson = new Gson();
         KhoaHoc khoaHocNew = gson.fromJson(khoaHoc, KhoaHoc.class);
 
-        Validator validator;
-        try (ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory()) {
-            validator = validatorFactory.getValidator();
-        }
-        Set<ConstraintViolation<KhoaHoc>> violations = validator.validate(khoaHocNew);
-
-        if (violations.isEmpty()) {
+        List<String> errorMessages = ValidationUtils.validate(khoaHocNew, KhoaHoc.class);
+        if (!errorMessages.isEmpty()) {
+            return ResponseEntity.badRequest().body(errorMessages);
+        } else {
             khoaHocRepository.save(khoaHocNew);
             return ResponseEntity.ok().build();
-        } else {
-            List<String> errorMessages = violations.stream()
-                    .map(ConstraintViolation::getMessage)
-                    .collect(Collectors.toList());
-            return ResponseEntity.badRequest().body(errorMessages);
         }
     }
 
