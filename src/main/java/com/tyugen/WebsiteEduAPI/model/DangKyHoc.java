@@ -60,7 +60,6 @@ public class DangKyHoc {
         if (khoaHoc == null || hocVien == null || tinhTrangHoc == null || taiKhoan == null) {
             throw new IllegalStateException("Related entities must exist");
         }
-        ngayDangKy = new Date(System.currentTimeMillis());
         updateNgayBatDauAndNgayKetThuc();
     }
 
@@ -72,10 +71,12 @@ public class DangKyHoc {
         updateNgayBatDauAndNgayKetThuc();
     }
 
+
     /**
-     * Updates the ngayBatDau and ngayKetThuc fields based on the tinhTrangHoc field.
+     * Updates the ngayBatDau and ngayKetThuc fields based on the tinhTrangHoc and khoaHoc field.
      */
     private void updateNgayBatDauAndNgayKetThuc() {
+        ngayDangKy = new Date(System.currentTimeMillis());
         if (tinhTrangHoc != null && tinhTrangHoc.getTinhTrangHocID() == 2) {
             ngayBatDau = new Date(System.currentTimeMillis());
             if (khoaHoc != null) {

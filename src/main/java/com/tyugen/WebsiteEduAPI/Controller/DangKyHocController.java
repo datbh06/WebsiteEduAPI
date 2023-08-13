@@ -4,6 +4,8 @@ import com.tyugen.WebsiteEduAPI.model.DangKyHoc;
 import com.tyugen.WebsiteEduAPI.model.KhoaHoc;
 import com.tyugen.WebsiteEduAPI.service.DangKyHocService;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -73,5 +75,21 @@ public class DangKyHocController {
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "size", defaultValue = "5") int size) {
         return dangKyHocService.getDangKyHocByPage(page, size);
+    }
+
+    /**
+     * Retrieve a page of dang ky hoc objects that have the specified hocVienID.
+     *
+     * @param page      the page number
+     * @param size      the number of objects per page
+     * @param hocVienID the hocVienID to be used in the query
+     * @return a Page object that contains the DangKyHoc objects that have the specified hocVienID
+     */
+    @GetMapping("/page/{hocVienID}")
+    public Page<DangKyHoc> getDangKyHocByHocVienID(
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = "5") int size,
+            @PathVariable("hocVienID") int hocVienID) {
+        return dangKyHocService.getDangKyHocByHocVienID(page, size, hocVienID);
     }
 }

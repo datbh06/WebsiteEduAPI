@@ -127,4 +127,17 @@ public class DangKyHocService {
         Pageable pageable = PageRequest.of(page, size);
         return dangKyHocRepository.findAll(pageable);
     }
+
+    /**
+     * Retrieve a page of dang ky hoc objects that have the specified hocVienID.
+     *
+     * @param page      the page number
+     * @param size      the number of objects per page
+     * @param hocVienID the hocVienID to be used in the query
+     * @return a Page object that contains the DangKyHoc objects that have the specified hocVienID
+     */
+    public Page<DangKyHoc> getDangKyHocByHocVienID(int page, int size, int hocVienID) {
+        Pageable pageable = PageRequest.of(page, size);
+        return dangKyHocRepository.findByHocVienID(hocVienID, pageable);
+    }
 }
